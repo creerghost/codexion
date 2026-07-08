@@ -9,12 +9,12 @@ def run_heap_test(args: list[str]) -> str:
 
 
 def test_heap_sort_basic() -> None:
-    args = ["10", "5", "8", "1", "20", "3"]
+    args = ["100", "17", "36", "25", "19", "7", "3", "2", "1"]
     out = run_heap_test(args)
     print(f"\nArgs:    {' '.join(args)}")
     print(f"Output:  {out}")
     print()
-    assert out == "1 3 5 8 10 20"
+    assert out == "1 2 3 7 17 19 25 36 100"
 
 
 def test_heap_sort_duplicates() -> None:

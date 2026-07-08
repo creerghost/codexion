@@ -8,3 +8,7 @@
 - Set up simulation state parameters (start time, flags, etc.)
 - Create and launch the coder threads
 - Create and launch the monitor thread
+
+## Resources
+
+https://www.youtube.com/shorts/4NYk5vW_5yc

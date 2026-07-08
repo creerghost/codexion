@@ -6,22 +6,41 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:37:51 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/07/08 21:53:23 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/07/08 23:36:21 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-static int	is_higher_priority(t_heap *heap, int a, int b)
+/**
+ * Checks if the node at index `a` has higher priority than the node at index `b`.
+ * 
+ * Priority Rules:
+ * 1. If key[a] < key[b], node `a` has higher priority.
+ * 2. If keys are equal, lower coder_id has higher priority.
+ * 
+ * heap: Pointer to the heap structure.
+ * a: Index of the first node.
+ * b: Index of the second node.
+ * Returns true if node `a` has higher priority, false otherwise.
+ */
+static bool	is_higher_priority(t_heap *heap, int a, int b)
 {
 	if (heap->keys[a] < heap->keys[b])
-		return (1);
+		return (true);
 	if (heap->keys[a] == heap->keys[b]
 		&& heap->coder_ids[a] < heap->coder_ids[b])
-		return (1);
-	return (0);
+		return (true);
+	return (false);
 }
 
+/**
+ * Swaps two nodes in the heap.
+ * 
+ * heap: Pointer to the heap structure.
+ * i: Index of the first node to swap.
+ * j: Index of the second node to swap.
+ */
 void	swap_nodes(t_heap *heap, int i, int j)
 {
 	int		temp_id;
@@ -35,6 +54,12 @@ void	swap_nodes(t_heap *heap, int i, int j)
 	heap->keys[j] = temp_key;
 }
 
+/**
+ * Maintains the min-heap property by moving the element at the root 
+ * down to its correct position.
+ * 
+ * heap: Pointer to the heap structure.
+ */
 void	bubble_down(t_heap *heap)
 {
 	int	curr;
@@ -60,6 +85,13 @@ void	bubble_down(t_heap *heap)
 	}
 }
 
+/**
+ * Maintains the min-heap property by moving the element at the given index 
+ * up to its correct position.
+ * 
+ * heap: Pointer to the heap structure.
+ * current: Index of the element to move up.
+ */
 void	bubble_up(t_heap *heap, int current)
 {
 	int	parent;

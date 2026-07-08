@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 11:45:28 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/07/08 13:30:49 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/07/09 00:05:05 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_heap
 *   cond: coders wait here for this dongle
 *   held: 1 if currently held, 0 if free
 *   release_time: timestamp when last released (for cooldown)
-*   wait_queue: pending requests sorted by scheduler policy
+*   heapq: pending requests sorted by scheduler policy
 */
 typedef struct s_dongle
 {
@@ -65,7 +65,7 @@ typedef struct s_dongle
 	pthread_cond_t	cond;
 	bool			held;
 	long			release_time;
-	t_heap			wait_queue;
+	t_heap			heapq;
 }	t_dongle;
 
 /* struct coder: Per-Thread Data
