@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:16:40 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/07/08 23:35:54 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/07/09 00:28:45 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
  */
 bool	ft_heap_new(t_heap *heap, int capacity)
 {
-	heap->coder_ids = (int *)malloc(capacity * sizeof(int));
+	heap->coder_ids = (int *)ft_calloc(capacity * sizeof(int));
 	if (!heap->coder_ids)
 		return (false);
-	heap->keys = (long *)malloc(capacity * sizeof(long));
+	heap->keys = (long *)ft_calloc(capacity * sizeof(long));
 	if (!heap->keys)
 		return (free(heap->coder_ids), false);
 	heap->size = 0;

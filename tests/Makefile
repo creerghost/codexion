@@ -23,7 +23,7 @@ CFLAGS = -Wall -Wextra -Werror -pthread -I../includes
 
 OBJS = $(OBJ_DIR)/parser.o \
 	$(OBJ_DIR)/atoi_codex.o \
-	$(OBJ_DIR)/util_strings.o
+	$(OBJ_DIR)/utils/util_strings.o
 
 GREEN		= \033[1;32m
 RESET		= \033[90m
@@ -41,7 +41,7 @@ $(EXEC_DIR):
 $(EXEC_DIR)/test_parser: $(C_MAINS_DIR)/test_parser.c $(OBJS) | $(EXEC_DIR)
 	$(CC) $(CFLAGS) -o $@ $^
 
-$(EXEC_DIR)/test_heap: $(C_MAINS_DIR)/test_heap.c $(OBJS) ../obj/heap.o ../obj/heap_utils.o | $(EXEC_DIR)
+$(EXEC_DIR)/test_heap: $(C_MAINS_DIR)/test_heap.c $(OBJS) ../obj/heap.o ../obj/utils/heap_utils.o ../obj/utils/utils.o | $(EXEC_DIR)
 	$(CC) $(CFLAGS) -o $@ $^
 
 test_parser: install $(EXEC_DIR)/test_parser

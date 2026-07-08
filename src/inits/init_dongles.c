@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_dongles.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 23:54:54 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/07/09 00:18:09 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/07/09 00:29:17 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ bool init_dongles(t_sim *sim)
 {
     int i;
 
-    sim->dongles = (t_dongle *)malloc(sim->num_coders * sizeof(t_dongle));
+    sim->dongles = (t_dongle *)ft_calloc(sim->num_coders * sizeof(t_dongle));
     if (!sim->dongles)
         return (false);
     i = 0;

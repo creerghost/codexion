@@ -6,7 +6,7 @@
 #    By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/08 22:38:27 by vlnikola          #+#    #+#              #
-#    Updated: 2026/07/08 22:45:56 by vlnikola         ###   ########.fr        #
+#    Updated: 2026/07/09 00:40:08 by vlnikola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,14 @@ INCLUDES	= -Iincludes
 SRC			= $(SRC_DIR)/main.c \
 				$(SRC_DIR)/atoi_codex.c \
 				$(SRC_DIR)/heap.c \
-				$(SRC_DIR)/heap_utils.c \
 				$(SRC_DIR)/logging.c \
 				$(SRC_DIR)/parser.c \
-				$(SRC_DIR)/time_utils.c \
-				$(SRC_DIR)/util_strings.c
+				$(SRC_DIR)/utils/heap_utils.c \
+				$(SRC_DIR)/utils/time_utils.c \
+				$(SRC_DIR)/utils/utils.c \
+				$(SRC_DIR)/utils/util_strings.c \
+				$(SRC_DIR)/inits/init_coders.c \
+				$(SRC_DIR)/inits/init_dongles.c
 
 OBJ			= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
@@ -44,7 +47,8 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@printf "$(GREEN)$(NAME) compiled successfully$(RESET)\n"
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
 	@printf "$(RESET)"
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 

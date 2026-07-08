@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 11:45:28 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/07/09 00:05:05 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/07/09 00:43:17 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ typedef struct s_dongle
 *   right_dongle: index into sim->dongles for right dongle
 *   first_dongle: index of first dongle to acquire (min of left/right)
 *   second_dongle: index of second dongle to acquire (max of left/right)
-*   thread: pthread identifier for this coder's thread
+*   thread_id: pthread identifier for this coder's thread
+*   mutex: protects this coder's state from data races with the monitor
 *   sim: back-pointer to the global simulation state
 */
 typedef struct s_coder
@@ -89,7 +90,8 @@ typedef struct s_coder
 	int				right_dongle;
 	int				first_dongle;
 	int				second_dongle;
-	pthread_t		thread;
+	pthread_t		thread_id;
+	pthread_mutex_t	mutex;
 	struct s_sim	*sim;
 }	t_coder;
 

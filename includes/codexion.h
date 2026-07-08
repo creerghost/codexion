@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 12:55:14 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/07/08 23:40:33 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/07/09 00:33:05 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@
 # include <limits.h>
 # include <pthread.h>
 # include <sys/time.h>
+
+/* utils.c */
+void	*ft_calloc(size_t size);
+int	ft_min(int a, int b);
+int	ft_max(int a, int b);
 
 /* time_utils.c */
 long get_time_ms(void);
@@ -52,4 +57,11 @@ void	ft_heapfree(t_heap *heap);
 /* heap_utils.c */
 void	bubble_down(t_heap *heap);
 void	bubble_up(t_heap *heap, int current);
+
+/* init_dongles.c */
+bool init_dongles(t_sim *sim);
+
+/* init_coders.c*/
+bool init_coders(t_sim *sim);
+
 #endif
