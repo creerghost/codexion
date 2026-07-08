@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 12:55:14 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/07/08 13:23:07 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/07/08 21:53:53 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,14 @@ char    *must_be(void);
 /* parser.c */
 int parse_args(int ac, char **av, t_sim *sim);
 
+/* heap.c */
+int		ft_heap_new(t_heap *heap, int capacity);
+int		ft_heappush(t_heap *heap, int coder_id, long key);
+int		ft_heappop(t_heap *heap, int *coder_id);
+int		ft_heappeek(t_heap *heap);
+void	ft_heapfree(t_heap *heap);
+
+/* heap_utils.c */
+void	bubble_down(t_heap *heap);
+void	bubble_up(t_heap *heap, int current);
 #endif

@@ -1,35 +1,66 @@
-UV = uv
-PYTHON = $(UV) run python
-GREEN		= \033[1;32m
-RESET		= \033[0m
-YELLOW		= \033[1;33m
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2026/07/08 22:36:59 by vlnikola          #+#    #+#              #
+#    Updated: 2026/07/08 22:41:09 by vlnikola         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -pthread -I../coders
+UV = uv
+PYTHON = $(UV) run python -m pytest -v -s --no-header
 
 OBJ_DIR = ../obj
-OBJS = $(OBJ_DIR)/parser.o $(OBJ_DIR)/atoi_codex.o $(OBJ_DIR)/util_strings.o
 C_MAINS_DIR = c_mains
 PY_DIR = scripts
+EXEC_DIR = execs
 
-all: test
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -pthread -I../includes
+
+OBJS = $(OBJ_DIR)/parser.o \
+	$(OBJ_DIR)/atoi_codex.o \
+	$(OBJ_DIR)/util_strings.o
+
+GREEN		= \033[1;32m
+RESET		= \033[90m
+YELLOW		= \033[1;33m
+
+all: test_all
 
 install:
 	@printf "$(YELLOW)Installing dependencies...$(RESET)\n"
 	$(UV) sync
 
-test_parser: $(C_MAINS_DIR)/test_parser.c $(OBJS)
+$(EXEC_DIR):
+	mkdir -p $(EXEC_DIR)
+
+$(EXEC_DIR)/test_parser: $(C_MAINS_DIR)/test_parser.c $(OBJS) | $(EXEC_DIR)
 	$(CC) $(CFLAGS) -o $@ $^
+
+$(EXEC_DIR)/test_heap: $(C_MAINS_DIR)/test_heap.c $(OBJS) ../obj/heap.o ../obj/heap_utils.o | $(EXEC_DIR)
+	$(CC) $(CFLAGS) -o $@ $^
+
+test_parser: install $(EXEC_DIR)/test_parser
+	@printf "$(GREEN)Running parser tests...$(RESET)\n"
+	@$(PYTHON) $(PY_DIR)/test_parser.py
+	@printf "$(GREEN)Parser tests passed$(RESET)\n"
+
+test_heap: install $(EXEC_DIR)/test_heap
+	@printf "$(GREEN)Running heap tests...$(RESET)\n"
+	@$(PYTHON) $(PY_DIR)/test_heap.py
+	@printf "$(GREEN)Heap tests passed$(RESET)\n"
+
+test_all: test_parser test_heap
+	@printf "$(GREEN)\nAll tests passed!$(RESET)\n"
 
 clean:
 	rm -rf __pycache__ .pytest_cache
 	@printf "$(YELLOW)Caches in tests/ removed...$(RESET)\n"
-	rm -rf test_parser
-	@printf "$(YELLOW)Test executable in tests/ removed...$(RESET)\n"
+	rm -rf $(EXEC_DIR)
+	@printf "$(YELLOW)Test executables in tests/ removed...$(RESET)\n"
 
-test: install test_parser
-	@printf "$(GREEN)Running tests...$(RESET)\n"
-	@$(PYTHON) $(PY_DIR)/test_parser.py
-	@printf "$(GREEN)✔ All tests passed$(RESET)\n"
-
-.PHONY: all install test clean
+.PHONY: all install clean test_parser test_heap test_all
