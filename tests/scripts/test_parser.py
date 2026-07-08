@@ -1,51 +1,12 @@
-from ctypes import (CDLL, Structure,
-                    POINTER, byref,
-                    c_int, c_long, c_char_p, c_byte,
-                    Array)
-import os
+import subprocess
 import pytest
 import sys
 
-# Load the shared library
-lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                        "libcodexion.so"))
-lib = CDLL(lib_path)
-
-
-class t_sim(Structure):
-    _fields_ = [
-        ("num_coders", c_int),
-        ("time_to_burnout", c_long),
-        ("time_to_compile", c_long),
-        ("time_to_debug", c_long),
-        ("time_to_refactor", c_long),
-        ("num_compiles_req", c_int),
-        ("dongle_cooldown", c_long),
-        ("scheduler", c_int),
-        ("padding", c_byte * 256),
-        # Padding to ensure enough memory for the rest of the struct
-    ]
-
-
-lib.parse_args.argtypes = [c_int, POINTER(c_char_p), POINTER(t_sim)]
-lib.parse_args.restype = c_int
-
 
 def run_test(args: list[str], expected_exit_code: int) -> None:
-    full_args: list[str] = ["./codexion"] + args
-    ac: int = len(full_args)
-
-    av: Array[c_char_p] = (c_char_p * ac)()
-    for i, arg in enumerate(full_args):
-        av[i] = arg.encode('utf-8')
-
-    sim: t_sim = t_sim()
-    result: int = lib.parse_args(ac, av, byref(sim))
-
-    # parse_args returns 1 on success, 0 on failure
-    # expected_exit_code is 1 for failure, 0 for success
-    expected_result = 0 if expected_exit_code == 1 else 1
-    assert result == expected_result
+    cmd = ["./test_parser"] + args
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    assert result.returncode == expected_exit_code
 
 
 def test_missing_arguments() -> None:

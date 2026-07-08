@@ -5,12 +5,12 @@ RESET		= \033[0m
 YELLOW		= \033[1;33m
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fPIC -I../coders
+CFLAGS = -Wall -Wextra -Werror -pthread -I../coders
 
-SRC_DIR = ../coders
-OBJ_DIR_PY = ../obj_py
-SRCS = $(SRC_DIR)/parser.c $(SRC_DIR)/atoi_codex.c $(SRC_DIR)/util_strings.c
-OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR_PY)/%.o)
+OBJ_DIR = ../obj
+OBJS = $(OBJ_DIR)/parser.o $(OBJ_DIR)/atoi_codex.o $(OBJ_DIR)/util_strings.o
+C_MAINS_DIR = c_mains
+PY_DIR = scripts
 
 all: test
 
@@ -18,27 +18,18 @@ install:
 	@printf "$(YELLOW)Installing dependencies...$(RESET)\n"
 	$(UV) sync
 
-$(OBJ_DIR_PY):
-	mkdir -p $(OBJ_DIR_PY)
-
-$(OBJ_DIR_PY)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR_PY)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-libcodexion.so: $(OBJS)
-	$(CC) -shared -o $@ $^
+test_parser: $(C_MAINS_DIR)/test_parser.c $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
-	rm -rf $(OBJ_DIR_PY) __pycache__ .pytest_cache
+	rm -rf __pycache__ .pytest_cache
 	@printf "$(YELLOW)Caches in tests/ removed...$(RESET)\n"
-	rm -rf $(OBJ_DIR_PY)
-	@printf "$(YELLOW)Object files in tests/ removed...$(RESET)\n"
-	rm -rf $(OBJ_DIR_PY) libcodexion.so
-	@printf "$(YELLOW)Shared library in tests/ removed...$(RESET)\n"
+	rm -rf test_parser
+	@printf "$(YELLOW)Test executable in tests/ removed...$(RESET)\n"
 
-
-test: install libcodexion.so
+test: install test_parser
 	@printf "$(GREEN)Running tests...$(RESET)\n"
-	@$(PYTHON) test_parser.py
+	@$(PYTHON) $(PY_DIR)/test_parser.py
 	@printf "$(GREEN)✔ All tests passed$(RESET)\n"
 
 .PHONY: all install test clean

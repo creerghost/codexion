@@ -58,7 +58,7 @@ fclean-venv: fclean
 
 re: fclean all
 
-test:
+test: re
 	@$(MAKE) -C $(TEST_DIR) test
 
 help:
