@@ -68,5 +68,6 @@ void free_coders(t_context *ctx, unsigned int amount);
 
 /* init_context.c */
 bool init_context(int argc, char **argv, t_context *ctx);
+void free_context(t_context *ctx);
 
 #endif

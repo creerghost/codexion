@@ -6,7 +6,7 @@
 #    By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/08 22:38:27 by vlnikola          #+#    #+#              #
-#    Updated: 2026/07/09 00:48:06 by vlnikola         ###   ########.fr        #
+#    Updated: 2026/07/09 01:38:11 by vlnikola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,10 +75,10 @@ re: fclean all
 test: re
 	@$(MAKE) -C $(TEST_DIR) test_all
 
-test_parser: re
+test-parser: re
 	@$(MAKE) -C $(TEST_DIR) test_parser
 
-test_heap: re
+test-heap: re
 	@$(MAKE) -C $(TEST_DIR) test_heap
 
 help:
@@ -92,8 +92,8 @@ help:
 	@printf "  fclean-venv  - Remove object files, caches, the project and virtual environment\n"
 	@printf "  re           - Recompile the project\n"
 	@printf "  test         - Run all tests\n"
-	@printf "  test_parser  - Run parser tests\n"
-	@printf "  test_heap    - Run heap tests\n"
+	@printf "  test-parser  - Run parser tests\n"
+	@printf "  test-heap    - Run heap tests\n"
 	@printf "  help         - Show this help message\n"
 
-.PHONY: all clean fclean re test test_parser test_heap help
+.PHONY: all clean fclean re test test-parser test-heap help

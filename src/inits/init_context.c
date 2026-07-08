@@ -12,7 +12,7 @@
 
 #include "codexion.h"
 
-static void free_context(t_context *ctx)
+void free_context(t_context *ctx)
 {
     if (ctx->dongles)
         free_dongles(ctx, ctx->args->num_coders);
@@ -20,6 +20,9 @@ static void free_context(t_context *ctx)
         free_coders(ctx, ctx->args->num_coders);
     if (ctx->args)
         free(ctx->args);
+    pthread_mutex_destroy(&ctx->log_mutex);
+    pthread_mutex_destroy(&ctx->sim_mutex);
+    pthread_cond_destroy(&ctx->done_cond);
 }
 
 static void	init_context_zero(t_context *ctx)
@@ -38,6 +41,12 @@ bool    init_context(int argc, char **argv, t_context *ctx)
     if (!ctx->args)
         return (false);
     if (!parse_args(argc, argv, ctx))
+        return (free_context(ctx), false);
+    if (pthread_mutex_init(&ctx->log_mutex, NULL) != 0)
+        return (free_context(ctx), false);
+    if (pthread_mutex_init(&ctx->sim_mutex, NULL) != 0)
+        return (free_context(ctx), false);
+    if (pthread_cond_init(&ctx->done_cond, NULL) != 0)
         return (free_context(ctx), false);
     if (!init_coders(ctx))
         return (free_context(ctx), false);
