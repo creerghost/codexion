@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 11:45:28 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/07/08 11:52:51 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/07/08 13:30:49 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,27 @@
 # define DATA_STRUCTURES_H
 
 # include <pthread.h>
+# include <stdbool.h>
+
+/* Enum of scheduler algorithms */
+typedef enum e_scheduler
+{
+    FIFO,
+    EDF
+}               t_scheduler;
+
+/* Parsed arguments */
+typedef struct s_args
+{
+	int num_coders;
+	long time_to_burnout;
+	long time_to_compile;
+	long time_to_debug;
+	long time_to_refactor;
+	int num_compiles_req;
+	long dongle_cooldown;
+	t_scheduler scheduler;
+}               t_args;
 
 /* struct heap: Min-Heap Priority Queue
 *
@@ -42,7 +63,7 @@ typedef struct s_dongle
 {
 	pthread_mutex_t	mutex;
 	pthread_cond_t	cond;
-	int				held;
+	bool			held;
 	long			release_time;
 	t_heap			wait_queue;
 }	t_dongle;
