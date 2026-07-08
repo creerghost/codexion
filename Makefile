@@ -6,7 +6,7 @@
 #    By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/08 22:38:27 by vlnikola          #+#    #+#              #
-#    Updated: 2026/07/09 00:40:08 by vlnikola         ###   ########.fr        #
+#    Updated: 2026/07/09 00:48:06 by vlnikola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,10 @@ CFLAGS		= -Wall -Wextra -Werror -pthread
 INCLUDES	= -Iincludes
 
 SRC			= $(SRC_DIR)/main.c \
-				$(SRC_DIR)/atoi_codex.c \
 				$(SRC_DIR)/heap.c \
-				$(SRC_DIR)/logging.c \
 				$(SRC_DIR)/parser.c \
+				$(SRC_DIR)/utils/logging.c \
+				$(SRC_DIR)/utils/atoi_codex.c \
 				$(SRC_DIR)/utils/heap_utils.c \
 				$(SRC_DIR)/utils/time_utils.c \
 				$(SRC_DIR)/utils/utils.c \

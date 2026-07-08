@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 00:20:02 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/07/09 00:36:12 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/07/09 00:46:42 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ static void free_coders(t_sim *sim, unsigned int amount)
     if (!sim->coders)
         return ;
     while (i < amount)
-    {
-        pthread_mutex_destroy(&sim->coders[i].mutex);
-        i++;
-    }
+        pthread_mutex_destroy(&sim->coders[i++].mutex);
     free(sim->coders);
     sim->coders = NULL;
 }

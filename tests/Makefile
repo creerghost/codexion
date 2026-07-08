@@ -6,7 +6,7 @@
 #    By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/08 22:36:59 by vlnikola          #+#    #+#              #
-#    Updated: 2026/07/08 22:41:09 by vlnikola         ###   ########.fr        #
+#    Updated: 2026/07/09 00:53:13 by vlnikola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,16 @@ EXEC_DIR = execs
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread -I../includes
 
-OBJS = $(OBJ_DIR)/parser.o \
-	$(OBJ_DIR)/atoi_codex.o \
-	$(OBJ_DIR)/utils/util_strings.o
+OBJS = $(OBJ_DIR)/heap.o \
+	$(OBJ_DIR)/parser.o \
+	$(OBJ_DIR)/utils/logging.o \
+	$(OBJ_DIR)/utils/atoi_codex.o \
+	$(OBJ_DIR)/utils/heap_utils.o \
+	$(OBJ_DIR)/utils/time_utils.o \
+	$(OBJ_DIR)/utils/utils.o \
+	$(OBJ_DIR)/utils/util_strings.o \
+	$(OBJ_DIR)/inits/init_coders.o \
+	$(OBJ_DIR)/inits/init_dongles.o
 
 GREEN		= \033[1;32m
 RESET		= \033[90m
@@ -41,7 +48,7 @@ $(EXEC_DIR):
 $(EXEC_DIR)/test_parser: $(C_MAINS_DIR)/test_parser.c $(OBJS) | $(EXEC_DIR)
 	$(CC) $(CFLAGS) -o $@ $^
 
-$(EXEC_DIR)/test_heap: $(C_MAINS_DIR)/test_heap.c $(OBJS) ../obj/heap.o ../obj/utils/heap_utils.o ../obj/utils/utils.o | $(EXEC_DIR)
+$(EXEC_DIR)/test_heap: $(C_MAINS_DIR)/test_heap.c $(OBJS) | $(EXEC_DIR)
 	$(CC) $(CFLAGS) -o $@ $^
 
 test_parser: install $(EXEC_DIR)/test_parser
