@@ -34,6 +34,17 @@ These are non-negotiable rules that the implementation must respect:
 - **No memory leaks** (all heap memory freed)
 - Makefile rules: `$(NAME)`, `all`, `clean`, `fclean`, `re` ✅ (already done)
 
+### 42 Norm
+- Max **25 lines** per function (excluding braces)
+- Max **4 parameters** per function
+- Max **5 functions** per `.c` file
+- Max **5 variable declarations** per function, all at the top
+- No `for` loops — use `while` only
+- No ternary `?:` operators
+- No variable-length arrays (VLA)
+- Function prototypes and structs in `.h` files only
+- Headers must have include guards
+
 ### Threading & Synchronization
 - Each coder = **one thread** (`pthread_create`)
 - Each dongle protected by **one mutex** (`pthread_mutex_t`)
@@ -175,10 +186,7 @@ Main header — all struct definitions, enums, function prototypes, includes.
 - `coder_routine(void *arg)` — the thread function
 - Loop: acquire 2 dongles → compile → release dongles → debug → refactor → repeat
 - Check `sim_over` before each action
-- Special case: 1 coder, 1 dongle → can only take one dongle, so can never compile? No — re-reading: "If there is only one coder, there should be only one dongle on the table." They still need 2 dongles to compile but only 1 exists. This means 1 coder can never compile → immediate burnout. (Or the subject might intend the single dongle to be both left and right — need to handle this edge case.)
-
-> [!WARNING]
-> **Edge case — 1 coder**: The PDF says "there should be only one dongle." But compiling requires two. This likely means a single coder takes the same dongle twice (left = right = dongle 0). Verify during testing.
+- **Edge case — 1 coder**: only 1 dongle exists but 2 are needed to compile. The coder can never compile → immediate burnout (same as dining philosophers with 1 philosopher and 1 fork). The coder thread should detect it cannot acquire a second dongle and simply wait until the monitor detects burnout.
 
 ### [NEW] monitor.c
 - `monitor_routine(void *arg)` — separate thread

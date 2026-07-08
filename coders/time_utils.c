@@ -1,0 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   time_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/07/08 12:27:04 by vlnikola          #+#    #+#             */
+/*   Updated: 2026/07/08 12:30:45 by vlnikola         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "data_structures.h"
+#include <sys/time.h>
+
+/*
+** Returns the current time in milliseconds since the Epoch.
+*/
+long get_time_ms(void) {
+  struct timeval tv;
+
+  gettimeofday(&tv, NULL);
+  return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+}
+
+/*
+** Sleeps for the given duration in milliseconds, waiting for the simulation
+** to end.
+*/
+void ft_sleep(long duration_ms, t_sim *sim) {
+  long target;
+
+  target = get_time_ms() + duration_ms;
+  while (get_time_ms() < target) {
+    pthread_mutex_lock(&sim->sim_mutex);
+    pthread_cond_wait(&sim->done_cond, &sim->sim_mutex);
+    pthread_mutex_unlock(&sim->sim_mutex);
+  }
+}
