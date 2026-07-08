@@ -15,9 +15,9 @@
 /*
 ** Wrapper for protected printf.
 */
-void log_msg(t_sim *sim, int coder_id, char *msg)
+void log_msg(t_context *ctx, int coder_id, char *msg)
 {
-    pthread_mutex_lock(&(sim->log_mutex));
-    printf("%ld %d %s\n", get_time_ms() - sim->start_time, coder_id, msg);
-    pthread_mutex_unlock(&(sim->log_mutex));
+    pthread_mutex_lock(&(ctx->log_mutex));
+    printf("%ld %d %s\n", get_time_ms() - ctx->start_time, coder_id, msg);
+    pthread_mutex_unlock(&(ctx->log_mutex));
 }

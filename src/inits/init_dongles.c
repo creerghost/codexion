@@ -6,54 +6,54 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 23:54:54 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/07/09 00:29:17 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/07/09 01:16:36 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-static void free_dongles(t_sim *sim, unsigned int amount)
+void free_dongles(t_context *ctx, unsigned int amount)
 {
     unsigned int    i;
 
     i = 0;
-    if (!sim->dongles)
+    if (!ctx->dongles)
         return ;
     while (i < amount)
     {
-        ft_heapfree(&sim->dongles[i].heapq);
-        pthread_mutex_destroy(&sim->dongles[i].mutex);
-        pthread_cond_destroy(&sim->dongles[i].cond);
+        ft_heapfree(&ctx->dongles[i].heapq);
+        pthread_mutex_destroy(&ctx->dongles[i].mutex);
+        pthread_cond_destroy(&ctx->dongles[i].cond);
         i++;
     }
-    free(sim->dongles);
-    sim->dongles = NULL;
+    free(ctx->dongles);
+    ctx->dongles = NULL;
 }
 
-static bool init_single_dongle(t_sim *sim, int i)
+static bool init_single_dongle(t_context *ctx, int i)
 {
-    sim->dongles[i].held = false;
-    sim->dongles[i].release_time = 0;
-    if (!ft_heap_new(&sim->dongles[i].heapq, sim->num_coders))
+    ctx->dongles[i].held = false;
+    ctx->dongles[i].release_time = 0;
+    if (!ft_heap_new(&ctx->dongles[i].heapq, ctx->args->num_coders))
         return (false);
-    if (pthread_mutex_init(&sim->dongles[i].mutex, NULL) != 0)
-        return (ft_heapfree(&sim->dongles[i].heapq), false);
-    if (pthread_cond_init(&sim->dongles[i].cond, NULL) != 0)
-        return (pthread_mutex_destroy(&sim->dongles[i].mutex),
-                ft_heapfree(&sim->dongles[i].heapq), false);
+    if (pthread_mutex_init(&ctx->dongles[i].mutex, NULL) != 0)
+        return (ft_heapfree(&ctx->dongles[i].heapq), false);
+    if (pthread_cond_init(&ctx->dongles[i].cond, NULL) != 0)
+        return (pthread_mutex_destroy(&ctx->dongles[i].mutex),
+                ft_heapfree(&ctx->dongles[i].heapq), false);
     return (true);
 }
 
-bool init_dongles(t_sim *sim)
+bool init_dongles(t_context *ctx)
 {
     int i;
 
-    sim->dongles = (t_dongle *)ft_calloc(sim->num_coders * sizeof(t_dongle));
-    if (!sim->dongles)
+    ctx->dongles = (t_dongle *)ft_calloc(ctx->args->num_coders * sizeof(t_dongle));
+    if (!ctx->dongles)
         return (false);
     i = 0;
-    while (i < sim->num_coders)
-        if (!init_single_dongle(sim, i++))
-            return (free_dongles(sim, i), false);
+    while (i < ctx->args->num_coders)
+        if (!init_single_dongle(ctx, i++))
+            return (free_dongles(ctx, i), false);
     return (true);
 }

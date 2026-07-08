@@ -30,7 +30,8 @@ OBJS = $(OBJ_DIR)/heap.o \
 	$(OBJ_DIR)/utils/utils.o \
 	$(OBJ_DIR)/utils/util_strings.o \
 	$(OBJ_DIR)/inits/init_coders.o \
-	$(OBJ_DIR)/inits/init_dongles.o
+	$(OBJ_DIR)/inits/init_dongles.o \
+	$(OBJ_DIR)/inits/init_context.o
 
 GREEN		= \033[1;32m
 RESET		= \033[90m

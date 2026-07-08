@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 11:45:28 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/07/09 00:43:17 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/07/09 01:07:51 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ typedef struct s_dongle
 *   id: coder identifier (1-indexed for display)
 *   compile_count: number of times this coder has compiled
 *   last_compile_start: timestamp of last compile start (0 = sim start)
-*   left_dongle: index into sim->dongles for left dongle
-*   right_dongle: index into sim->dongles for right dongle
+*   left_dongle: index into ctx->dongles for left dongle
+*   right_dongle: index into ctx->dongles for right dongle
 *   first_dongle: index of first dongle to acquire (min of left/right)
 *   second_dongle: index of second dongle to acquire (max of left/right)
 *   thread_id: pthread identifier for this coder's thread
 *   mutex: protects this coder's state from data races with the monitor
-*   sim: back-pointer to the global simulation state
+*   ctx: back-pointer to the global simulation context
 */
 typedef struct s_coder
 {
@@ -92,19 +92,12 @@ typedef struct s_coder
 	int				second_dongle;
 	pthread_t		thread_id;
 	pthread_mutex_t	mutex;
-	struct s_sim	*sim;
+	struct s_context	*ctx;
 }	t_coder;
 
-/* struct sim: Simulation State
+/* struct context: Simulation Context
 *
-*   num_coders: number of coders and dongles in simulation
-*   time_to_burnout: ms before a coder burns out without compiling
-*   time_to_compile: ms required to compile (holding 2 dongles)
-*   time_to_debug: ms spent debugging
-*   time_to_refactor: ms spent refactoring
-*   num_compiles_req: simulation ends if all coders compile this many times
-*   dongle_cooldown: ms a dongle is unavailable after release
-*   scheduler: 0 for FIFO, 1 for EDF
+*   args:	pointer to the args struct
 *   coders: array of all coders
 *   dongles: array of all dongles
 *   log_mutex: protects log output to prevent interleaving
@@ -113,16 +106,9 @@ typedef struct s_coder
 *   active_coders: number of currently running coder threads
 *   start_time: simulation start timestamp in ms
 */
-typedef struct s_sim
+typedef struct s_context
 {
-	int				num_coders;
-	long			time_to_burnout;
-	long			time_to_compile;
-	long			time_to_debug;
-	long			time_to_refactor;
-	int				num_compiles_req;
-	long			dongle_cooldown;
-	int				scheduler;
+	t_args			*args;
 	t_coder			*coders;
 	t_dongle		*dongles;
 	pthread_mutex_t	log_mutex;
@@ -130,6 +116,6 @@ typedef struct s_sim
 	pthread_cond_t	done_cond;
 	int				active_coders;
 	long			start_time;
-}	t_sim;
+}	t_context;
 
 #endif

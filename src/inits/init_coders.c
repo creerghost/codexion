@@ -6,50 +6,50 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 00:20:02 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/07/09 00:46:42 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/07/09 01:16:01 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-static void free_coders(t_sim *sim, unsigned int amount)
+void free_coders(t_context *ctx, unsigned int amount)
 {
     unsigned int    i;
 
     i = 0;
-    if (!sim->coders)
+    if (!ctx->coders)
         return ;
     while (i < amount)
-        pthread_mutex_destroy(&sim->coders[i++].mutex);
-    free(sim->coders);
-    sim->coders = NULL;
+        pthread_mutex_destroy(&ctx->coders[i++].mutex);
+    free(ctx->coders);
+    ctx->coders = NULL;
 }
 
-static bool init_single_coder(t_sim *sim, int i)
+static bool init_single_coder(t_context *ctx, int i)
 {
-    sim->coders[i].id = i + 1;
-    sim->coders[i].compile_count = 0;
-    sim->coders[i].last_compile_start = 0;
-    sim->coders[i].left_dongle = i;
-    sim->coders[i].right_dongle = (i + 1) % sim->num_coders;
-    sim->coders[i].first_dongle = ft_min(sim->coders[i].left_dongle, sim->coders[i].right_dongle);
-    sim->coders[i].second_dongle = ft_max(sim->coders[i].left_dongle, sim->coders[i].right_dongle);
-    sim->coders[i].sim = sim;
-    if (pthread_mutex_init(&sim->coders[i].mutex, NULL) != 0)
+    ctx->coders[i].id = i + 1;
+    ctx->coders[i].compile_count = 0;
+    ctx->coders[i].last_compile_start = 0;
+    ctx->coders[i].left_dongle = i;
+    ctx->coders[i].right_dongle = (i + 1) % ctx->args->num_coders;
+    ctx->coders[i].first_dongle = ft_min(ctx->coders[i].left_dongle, ctx->coders[i].right_dongle);
+    ctx->coders[i].second_dongle = ft_max(ctx->coders[i].left_dongle, ctx->coders[i].right_dongle);
+    ctx->coders[i].ctx = ctx;
+    if (pthread_mutex_init(&ctx->coders[i].mutex, NULL) != 0)
         return (false);
     return (true);
 }
 
-bool init_coders(t_sim *sim)
+bool init_coders(t_context *ctx)
 {
     int i;
 
-    sim->coders = (t_coder *)ft_calloc(sim->num_coders * sizeof(t_coder));
-    if (!sim->coders)
+    ctx->coders = (t_coder *)ft_calloc(ctx->args->num_coders * sizeof(t_coder));
+    if (!ctx->coders)
         return (false);
     i = 0;
-    while (i < sim->num_coders)
-        if (!init_single_coder(sim, i++))
-            return (free_coders(sim, i), false);
+    while (i < ctx->args->num_coders)
+        if (!init_single_coder(ctx, i++))
+            return (free_coders(ctx, i), false);
     return (true);
 }

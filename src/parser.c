@@ -38,27 +38,27 @@ static int	validate_positive(int *parsed)
 	return (1);
 }
 
-static int	assign_args(t_sim *sim, int *parsed, char *sched)
+static int	assign_args(t_context *ctx, int *parsed, char *sched)
 {
 
-	sim->num_coders = parsed[0];
-	sim->time_to_burnout = parsed[1];
-	sim->time_to_compile = parsed[2];
-	sim->time_to_debug = parsed[3];
-	sim->time_to_refactor = parsed[4];
-	sim->num_compiles_req = parsed[5];
-	sim->dongle_cooldown = parsed[6];
+	ctx->args->num_coders = parsed[0];
+	ctx->args->time_to_burnout = parsed[1];
+	ctx->args->time_to_compile = parsed[2];
+	ctx->args->time_to_debug = parsed[3];
+	ctx->args->time_to_refactor = parsed[4];
+	ctx->args->num_compiles_req = parsed[5];
+	ctx->args->dongle_cooldown = parsed[6];
 	if (!strcmp(sched, "FIFO") || !strcmp(sched, "fifo"))
-		sim->scheduler = FIFO;
+		ctx->args->scheduler = FIFO;
 	else if (!strcmp(sched, "EDF") || !strcmp(sched, "edf"))
-		sim->scheduler = EDF;
+		ctx->args->scheduler = EDF;
 	else
 		return (fprintf(stderr, must_be(), "scheduler",
 						"fifo or edf"), 0);
 	return (1);
 }
 
-int	parse_args(int ac, char **av, t_sim *sim)
+int	parse_args(int ac, char **av, t_context *ctx)
 {
 	int	i;
 	int	parsed[7];
@@ -75,5 +75,5 @@ int	parse_args(int ac, char **av, t_sim *sim)
 	}
 	if (!validate_positive(parsed))
 		return (0);
-	return (assign_args(sim, parsed, av[8]));
+	return (assign_args(ctx, parsed, av[8]));
 }

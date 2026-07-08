@@ -2,7 +2,9 @@
 
 int main(int argc, char **argv)
 {
-	t_sim sim;
+	t_context ctx;
+	t_args args;
 
-	return (!parse_args(argc, argv, &sim));
+	ctx.args = &args;
+	return (!parse_args(argc, argv, &ctx));
 }

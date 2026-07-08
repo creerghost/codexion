@@ -30,23 +30,23 @@ long get_time_ms(void)
 ** Sleeps for the given duration in milliseconds, waiting for the simulation
 ** to end.
 */
-void ft_sleep(long duration_ms, t_sim *sim)
+void ft_sleep(long duration_ms, t_context *ctx)
 {
   long target;
 
   target = get_time_ms() + duration_ms;
   while (get_time_ms() < target)
   {
-    pthread_mutex_lock(&sim->sim_mutex);
-    pthread_cond_wait(&sim->done_cond, &sim->sim_mutex);
-    pthread_mutex_unlock(&sim->sim_mutex);
+    pthread_mutex_lock(&ctx->sim_mutex);
+    pthread_cond_wait(&ctx->done_cond, &ctx->sim_mutex);
+    pthread_mutex_unlock(&ctx->sim_mutex);
   }
 }
 
 /*
 ** Returns the time elapsed since the simulation started.
 */
-long elapsed_ms(t_sim *sim)
+long elapsed_ms(t_context *ctx)
 {
-    return (get_time_ms() - sim->start_time);
+    return (get_time_ms() - ctx->start_time);
 }

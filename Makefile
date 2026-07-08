@@ -30,7 +30,8 @@ SRC			= $(SRC_DIR)/main.c \
 				$(SRC_DIR)/utils/utils.c \
 				$(SRC_DIR)/utils/util_strings.c \
 				$(SRC_DIR)/inits/init_coders.c \
-				$(SRC_DIR)/inits/init_dongles.c
+				$(SRC_DIR)/inits/init_dongles.c \
+				$(SRC_DIR)/inits/init_context.c
 
 OBJ			= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 12:55:14 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/07/09 00:33:05 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/07/09 01:16:42 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int	ft_max(int a, int b);
 
 /* time_utils.c */
 long get_time_ms(void);
-void ft_sleep(long duration_ms, t_sim *sim);
-long elapsed_ms(t_sim *sim);
+void ft_sleep(long duration_ms, t_context *ctx);
+long elapsed_ms(t_context *ctx);
 
 /* logging.c */
-void log_msg(t_sim *sim, int coder_id, char *msg);
+void log_msg(t_context *ctx, int coder_id, char *msg);
 
 /* atoi_codex.c*/
 int	uatol(const char *str, int *result);
@@ -45,7 +45,7 @@ char	*not_enough_arg(void);
 char    *must_be(void);
 
 /* parser.c */
-int parse_args(int ac, char **av, t_sim *sim);
+int parse_args(int ac, char **av, t_context *ctx);
 
 /* heap.c */
 bool		ft_heap_new(t_heap *heap, int capacity);
@@ -59,9 +59,14 @@ void	bubble_down(t_heap *heap);
 void	bubble_up(t_heap *heap, int current);
 
 /* init_dongles.c */
-bool init_dongles(t_sim *sim);
+bool init_dongles(t_context *ctx);
+void free_dongles(t_context *ctx, unsigned int amount);
 
 /* init_coders.c*/
-bool init_coders(t_sim *sim);
+bool init_coders(t_context *ctx);
+void free_coders(t_context *ctx, unsigned int amount);
+
+/* init_context.c */
+bool init_context(int argc, char **argv, t_context *ctx);
 
 #endif
