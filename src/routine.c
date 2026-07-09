@@ -13,14 +13,14 @@
 #include "codexion.h"
 
 /**
- * @brief Safely grabs two required dongles without causing deadlock.
+ * Safely grabs two required dongles without causing deadlock.
  * 
  * Enforces ascending ID order when acquiring dongles.
  * 
- * @param coder Pointer to the coder.
- * @param d1 First required dongle.
- * @param d2 Second required dongle.
- * @return true if both acquired successfully, false otherwise.
+ * - coder: Pointer to the coder.
+ * - d1: First required dongle.
+ * - d2: Second required dongle.
+ * Returns: true if both acquired successfully, false otherwise.
  */
 
 static bool	grab_two_dongles(t_coder *coder, t_dongle *d1, t_dongle *d2)
@@ -33,12 +33,12 @@ static bool	grab_two_dongles(t_coder *coder, t_dongle *d1, t_dongle *d2)
 }
 
 /**
- * @brief Executes the compilation phase of the coder's lifecycle.
+ * Executes the compilation phase of the coder's lifecycle.
  * 
  * Grabs necessary dongles, sleeps, updates state, and drops dongles.
  * 
- * @param coder Pointer to the executing coder.
- * @return true if successful, false if starvation occurred.
+ * - coder: Pointer to the executing coder.
+ * Returns: true if successful, false if starvation occurred.
  */
 
 static void	compile(t_coder *coder)
@@ -52,13 +52,13 @@ static void	compile(t_coder *coder)
 }
 
 /**
- * @brief Main execution routine for each coder thread.
+ * Main execution routine for each coder thread.
  * 
  * Handles the thinking, compiling, and refactoring lifecycle until burnout
  * or required compiles are met.
  * 
- * @param arg Pointer to the coder struct.
- * @return NULL.
+ * - arg: Pointer to the coder struct.
+ * Returns: NULL.
  */
 void	*coder_routine(void *arg)
 {

@@ -13,10 +13,10 @@
 #include "codexion.h"
 
 /**
- * @brief Joins all active coder and monitor threads, waiting for them to finish.
+ * Joins all active coder and monitor threads, waiting for them to finish.
  * 
- * @param ctx Pointer to the simulation context.
- * @return true if all threads were joined successfully.
+ * - ctx: Pointer to the simulation context.
+ * Returns: true if all threads were joined successfully.
  */
 static void	stop_sim(t_context *ctx, int num_to_join)
 {
@@ -35,10 +35,10 @@ static void	stop_sim(t_context *ctx, int num_to_join)
 }
 
 /**
- * @brief Spawns all coder and monitor threads to begin the simulation.
+ * Spawns all coder and monitor threads to begin the simulation.
  * 
- * @param ctx Pointer to the simulation context.
- * @return true if all threads spawned successfully, false otherwise.
+ * - ctx: Pointer to the simulation context.
+ * Returns: true if all threads spawned successfully, false otherwise.
  */
 static bool	start_sim(t_context *ctx)
 {
@@ -65,14 +65,14 @@ static bool	start_sim(t_context *ctx)
 }
 
 /**
- * @brief Entry point for the Codexion simulation program.
+ * Entry point for the Codexion simulation program.
  * 
  * Parses arguments, initializes the context, starts the simulation,
  * waits for completion, and cleans up resources.
  * 
- * @param argc Argument count.
- * @param argv Argument vector.
- * @return 0 on success, 1 on error.
+ * - argc: Argument count.
+ * - argv: Argument vector.
+ * Returns: 0 on success, 1 on error.
  */
 int	main(int argc, char **argv)
 {

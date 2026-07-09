@@ -13,11 +13,11 @@
 #include "codexion.h"
 
 /**
- * @brief Returns the minimum of two integers.
+ * Returns the minimum of two integers.
  * 
- * @param a First integer.
- * @param b Second integer.
- * @return The minimum of the two integers.
+ * - a: First integer.
+ * - b: Second integer.
+ * Returns: The minimum of the two integers.
  */
 int	ft_min(int a, int b)
 {
@@ -27,11 +27,11 @@ int	ft_min(int a, int b)
 }
 
 /**
- * @brief Returns the maximum of two integers.
+ * Returns the maximum of two integers.
  * 
- * @param a First integer.
- * @param b Second integer.
- * @return The maximum of the two integers.
+ * - a: First integer.
+ * - b: Second integer.
+ * Returns: The maximum of the two integers.
  */
 int	ft_max(int a, int b)
 {
@@ -41,10 +41,10 @@ int	ft_max(int a, int b)
 }
 
 /**
- * @brief Allocates memory for an array and initializes to zero.
+ * Allocates memory for an array and initializes to zero.
  * 
- * @param size The size of the allocation in bytes.
- * @return Pointer to the allocated memory, or NULL on failure.
+ * - size: The size of the allocation in bytes.
+ * Returns: Pointer to the allocated memory, or NULL on failure.
  */
 void	*ft_calloc(size_t size)
 {
@@ -58,10 +58,10 @@ void	*ft_calloc(size_t size)
 }
 
 /**
- * @brief Thread-safe check if the simulation is still running.
+ * Thread-safe check if the simulation is still running.
  * 
- * @param ctx Pointer to the simulation context.
- * @return true if running, false if stopped.
+ * - ctx: Pointer to the simulation context.
+ * Returns: true if running, false if stopped.
  */
 bool	is_sim_running(t_context *ctx)
 {

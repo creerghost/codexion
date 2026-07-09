@@ -15,9 +15,9 @@
 #include <unistd.h>
 
 /**
- * @brief Wrapper of gettimeofday.
+ * Wrapper of gettimeofday.
  *
- * @return The current time in milliseconds.
+ * Returns: The current time in milliseconds.
  */
 long	get_time_ms(void)
 {
@@ -28,10 +28,10 @@ long	get_time_ms(void)
 }
 
 /**
- * @brief Precise sleep using usleep() + busy-wait tail.
+ * Precise sleep using usleep() + busy-wait tail.
  *
- * @param duration_ms Duration to sleep in milliseconds.
- * @param ctx Pointer to the simulation context.
+ * - duration_ms: Duration to sleep in milliseconds.
+ * - ctx: Pointer to the simulation context.
  */
 void	ft_sleep(long duration_ms, t_context *ctx)
 {
@@ -52,10 +52,10 @@ void	ft_sleep(long duration_ms, t_context *ctx)
 }
 
 /**
- * @brief Returns the time elapsed since the simulation started.
+ * Returns the time elapsed since the simulation started.
  *
- * @param ctx Pointer to the simulation context.
- * @return The elapsed time in milliseconds.
+ * - ctx: Pointer to the simulation context.
+ * Returns: The elapsed time in milliseconds.
  */
 long	elapsed_ms(t_context *ctx)
 {

@@ -13,11 +13,11 @@
 #include "codexion.h"
 
 /**
- * @brief Frees all resources associated with the simulation context.
+ * Frees all resources associated with the simulation context.
  * 
  * Destroys mutexes, frees arrays, and frees the context itself.
  * 
- * @param ctx Pointer to the simulation context.
+ * - ctx: Pointer to the simulation context.
  */
 void	free_context(t_context *ctx)
 {
@@ -33,9 +33,9 @@ void	free_context(t_context *ctx)
 }
 
 /**
- * @brief Zero-initializes context fields to prevent garbage.
+ * Zero-initializes context fields to prevent garbage.
  * 
- * @param ctx Pointer to the context structure.
+ * - ctx: Pointer to the context structure.
  */
 
 static void	init_context_zero(t_context *ctx)
@@ -49,10 +49,10 @@ static void	init_context_zero(t_context *ctx)
 }
 
 /**
- * @brief Allocates and initializes the global simulation context.
+ * Allocates and initializes the global simulation context.
  * 
- * @param ctx Pointer to the context pointer to be allocated.
- * @return true on success, false on allocation failure.
+ * - ctx: Pointer to the context pointer to be allocated.
+ * Returns: true on success, false on allocation failure.
  */
 bool	init_context(int argc, char **argv, t_context *ctx)
 {

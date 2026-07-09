@@ -30,10 +30,10 @@ static char	*get_arg_name(int idx)
 }
 
 /**
- * @brief Validates that a parsed argument is positive (> 0).
+ * Validates that a parsed argument is positive (> 0).
  * 
- * @param parsed Pointer to the parsed integer value.
- * @return true if valid, false if parsing failed or value <= 0.
+ * - parsed: Pointer to the parsed integer value.
+ * Returns: true if valid, false if parsing failed or value <= 0.
  */
 
 static int	validate_positive(int *parsed)
@@ -46,12 +46,12 @@ static int	validate_positive(int *parsed)
 }
 
 /**
- * @brief Assigns the validated parsed arguments to the context.
+ * Assigns the validated parsed arguments to the context.
  * 
- * @param ctx Pointer to the context structure.
- * @param parsed Array of parsed integers.
- * @param sched Pointer to the string representing the scheduler.
- * @return true if assignment succeeded, false otherwise.
+ * - ctx: Pointer to the context structure.
+ * - parsed: Array of parsed integers.
+ * - sched: Pointer to the string representing the scheduler.
+ * Returns: true if assignment succeeded, false otherwise.
  */
 
 static int	assign_args(t_context *ctx, int *parsed, char *sched)
@@ -73,12 +73,12 @@ static int	assign_args(t_context *ctx, int *parsed, char *sched)
 }
 
 /**
- * @brief Parses and validates command line arguments into the context.
+ * Parses and validates command line arguments into the context.
  * 
- * @param argc Argument count.
- * @param argv Argument vector.
- * @param ctx Pointer to the context to populate.
- * @return true if arguments are valid, false otherwise.
+ * - argc: Argument count.
+ * - argv: Argument vector.
+ * - ctx: Pointer to the context to populate.
+ * Returns: true if arguments are valid, false otherwise.
  */
 int	parse_args(int ac, char **av, t_context *ctx)
 {
