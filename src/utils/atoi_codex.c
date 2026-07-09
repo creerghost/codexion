@@ -12,6 +12,14 @@
 
 #include "codexion.h"
 
+/**
+ * @brief Converts a string to an unsigned long safely.
+ * 
+ * @param str The string to convert.
+ * @param result Pointer to store the successfully converted integer.
+ * @return true if successful, false on overflow or invalid char.
+ */
+
 int	uatol(const char *str, int *result)
 {
 	long	num;

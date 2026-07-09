@@ -29,6 +29,13 @@ static char	*get_arg_name(int idx)
 	return ("dongle_cooldown");
 }
 
+/**
+ * @brief Validates that a parsed argument is positive (> 0).
+ * 
+ * @param parsed Pointer to the parsed integer value.
+ * @return true if valid, false if parsing failed or value <= 0.
+ */
+
 static int	validate_positive(int *parsed)
 {
 	if (parsed[0] == 0)
@@ -37,6 +44,15 @@ static int	validate_positive(int *parsed)
 		return (fprintf(stderr, must_be(), get_arg_name(6), "positive"), 0);
 	return (1);
 }
+
+/**
+ * @brief Assigns the validated parsed arguments to the context.
+ * 
+ * @param ctx Pointer to the context structure.
+ * @param parsed Array of parsed integers.
+ * @param sched Pointer to the string representing the scheduler.
+ * @return true if assignment succeeded, false otherwise.
+ */
 
 static int	assign_args(t_context *ctx, int *parsed, char *sched)
 {
@@ -56,6 +72,14 @@ static int	assign_args(t_context *ctx, int *parsed, char *sched)
 	return (1);
 }
 
+/**
+ * @brief Parses and validates command line arguments into the context.
+ * 
+ * @param argc Argument count.
+ * @param argv Argument vector.
+ * @param ctx Pointer to the context to populate.
+ * @return true if arguments are valid, false otherwise.
+ */
 int	parse_args(int ac, char **av, t_context *ctx)
 {
 	int	i;

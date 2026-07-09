@@ -6,7 +6,7 @@
 #    By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/08 22:36:59 by vlnikola          #+#    #+#              #
-#    Updated: 2026/07/09 01:39:43 by vlnikola         ###   ########.fr        #
+#    Updated: 2026/07/09 19:24:05 by vlnikola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,12 @@ test_dongle: install $(EXEC_DIR)/test_dongle
 	@$(PYTHON) $(PY_DIR)/test_dongle.py
 	@printf "$(GREEN)Dongle tests passed$(RESET)\n"
 
-test_all: test_parser test_heap test_dongle
+test_sim:
+	@printf "$(GREEN)Running simulation tests...\033[0m\n"
+	@python3 $(PY_DIR)/test_codexion.py
+	@printf "$(GREEN)Simulation tests passed$(RESET)\n"
+
+test_all: test_parser test_heap test_dongle test_sim
 	@printf "$(GREEN)\nAll tests passed!$(RESET)\n"
 
 clean:
@@ -79,5 +84,7 @@ clean:
 	@printf "$(YELLOW)Caches in tests/ removed...$(RESET)\n"
 	rm -rf $(EXEC_DIR)
 	@printf "$(YELLOW)Test executables in tests/ removed...$(RESET)\n"
+	rm -rf output
+	@printf "$(YELLOW)Test outputs removed...$(RESET)\n"
 
 .PHONY: all install clean test_parser test_heap test_all

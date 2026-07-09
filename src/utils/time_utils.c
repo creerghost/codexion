@@ -14,10 +14,11 @@
 #include <sys/time.h>
 #include <unistd.h>
 
-/*
-** Wrapper of gettimeofday.
-** Returns the current time in milliseconds.
-*/
+/**
+ * @brief Wrapper of gettimeofday.
+ *
+ * @return The current time in milliseconds.
+ */
 long	get_time_ms(void)
 {
 	struct timeval	tv;
@@ -26,11 +27,12 @@ long	get_time_ms(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-/*
-** Precise sleep using usleep() + busy-wait tail.
-** Sleeps for the given duration in milliseconds, waiting for the simulation
-** to end.
-*/
+/**
+ * @brief Precise sleep using usleep() + busy-wait tail.
+ *
+ * @param duration_ms Duration to sleep in milliseconds.
+ * @param ctx Pointer to the simulation context.
+ */
 void	ft_sleep(long duration_ms, t_context *ctx)
 {
 	long	target;
@@ -49,9 +51,12 @@ void	ft_sleep(long duration_ms, t_context *ctx)
 	}
 }
 
-/*
-** Returns the time elapsed since the simulation started.
-*/
+/**
+ * @brief Returns the time elapsed since the simulation started.
+ *
+ * @param ctx Pointer to the simulation context.
+ * @return The elapsed time in milliseconds.
+ */
 long	elapsed_ms(t_context *ctx)
 {
 	return (get_time_ms() - ctx->start_time);

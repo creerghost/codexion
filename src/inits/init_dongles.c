@@ -12,6 +12,13 @@
 
 #include "codexion.h"
 
+/**
+ * @brief Destroys mutexes and frees memory for dongles.
+ * 
+ * @param ctx Pointer to the simulation context.
+ * @param amount Number of dongles to free.
+ */
+
 void	free_dongles(t_context *ctx, unsigned int amount)
 {
 	unsigned int	i;
@@ -30,6 +37,14 @@ void	free_dongles(t_context *ctx, unsigned int amount)
 	ctx->dongles = NULL;
 }
 
+/**
+ * @brief Initializes a single dongle's mutex and priority queue.
+ * 
+ * @param ctx Pointer to the simulation context.
+ * @param i Index of the dongle.
+ * @return true if successful, false on failure.
+ */
+
 static bool	init_single_dongle(t_context *ctx, int i)
 {
 	ctx->dongles[i].held = false;
@@ -44,6 +59,12 @@ static bool	init_single_dongle(t_context *ctx, int i)
 	return (true);
 }
 
+/**
+ * @brief Allocates and initializes the array of dongle mutexes.
+ * 
+ * @param ctx Pointer to the simulation context.
+ * @return true on success, false on allocation or mutex init failure.
+ */
 bool	init_dongles(t_context *ctx)
 {
 	int	i;

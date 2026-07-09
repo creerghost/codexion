@@ -76,6 +76,9 @@ fclean-venv: fclean
 re: fclean all
 
 test: re
+	@$(MAKE) -C $(TEST_DIR) test_sim
+
+test-all: re
 	@$(MAKE) -C $(TEST_DIR) test_all
 
 test-parser: re

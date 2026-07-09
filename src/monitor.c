@@ -12,6 +12,16 @@
 
 #include "codexion.h"
 
+/**
+ * @brief Triggers the global burnout state for the simulation.
+ * 
+ * Logs the death and signals all threads to terminate.
+ * 
+ * @param ctx Pointer to the simulation context.
+ * @param coder_id ID of the coder that burned out.
+ * @return true (always).
+ */
+
 static bool	handle_burnout(t_context *ctx, int coder_id)
 {
 	pthread_mutex_lock(&ctx->sim_mutex);
@@ -24,6 +34,13 @@ static bool	handle_burnout(t_context *ctx, int coder_id)
 	return (true);
 }
 
+/**
+ * @brief Triggers the global finish state when targets are met.
+ * 
+ * @param ctx Pointer to the simulation context.
+ * @return true (always).
+ */
+
 static bool	handle_finish(t_context *ctx)
 {
 	pthread_mutex_lock(&ctx->sim_mutex);
@@ -32,6 +49,15 @@ static bool	handle_finish(t_context *ctx)
 	pthread_cond_broadcast(&ctx->done_cond);
 	return (true);
 }
+
+/**
+ * @brief Main polling function for the monitor thread.
+ * 
+ * Iterates over all coders checking for burnout or completion.
+ * 
+ * @param ctx Pointer to the simulation context.
+ * @return true if simulation should stop, false to continue.
+ */
 
 static bool	check_coders(t_context *ctx)
 {
@@ -57,6 +83,15 @@ static bool	check_coders(t_context *ctx)
 	return (false);
 }
 
+/**
+ * @brief Main execution routine for the monitor thread.
+ * 
+ * Periodically checks all coders for burnout or completion. Signals the
+ * simulation to stop if a burnout occurs or all targets are met.
+ * 
+ * @param arg Pointer to the simulation context.
+ * @return NULL.
+ */
 void	*monitor_routine(void *arg)
 {
 	t_context	*ctx;

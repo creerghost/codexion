@@ -12,7 +12,13 @@
 
 #include "codexion.h"
 
-/* Returns the minimum of two integers */
+/**
+ * @brief Returns the minimum of two integers.
+ * 
+ * @param a First integer.
+ * @param b Second integer.
+ * @return The minimum of the two integers.
+ */
 int	ft_min(int a, int b)
 {
 	if (a < b)
@@ -20,7 +26,13 @@ int	ft_min(int a, int b)
 	return (b);
 }
 
-/* Returns the maximum of two integers */
+/**
+ * @brief Returns the maximum of two integers.
+ * 
+ * @param a First integer.
+ * @param b Second integer.
+ * @return The maximum of the two integers.
+ */
 int	ft_max(int a, int b)
 {
 	if (a > b)
@@ -28,7 +40,12 @@ int	ft_max(int a, int b)
 	return (b);
 }
 
-/* Allocates memory for an array of elements and initializes them to zero. */
+/**
+ * @brief Allocates memory for an array and initializes to zero.
+ * 
+ * @param size The size of the allocation in bytes.
+ * @return Pointer to the allocated memory, or NULL on failure.
+ */
 void	*ft_calloc(size_t size)
 {
 	void	*ptr;
@@ -40,6 +57,12 @@ void	*ft_calloc(size_t size)
 	return (ptr);
 }
 
+/**
+ * @brief Thread-safe check if the simulation is still running.
+ * 
+ * @param ctx Pointer to the simulation context.
+ * @return true if running, false if stopped.
+ */
 bool	is_sim_running(t_context *ctx)
 {
 	bool	status;

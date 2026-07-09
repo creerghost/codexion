@@ -12,6 +12,13 @@
 
 #include "codexion.h"
 
+/**
+ * @brief Frees all resources associated with the simulation context.
+ * 
+ * Destroys mutexes, frees arrays, and frees the context itself.
+ * 
+ * @param ctx Pointer to the simulation context.
+ */
 void	free_context(t_context *ctx)
 {
 	if (ctx->dongles)
@@ -25,6 +32,12 @@ void	free_context(t_context *ctx)
 	pthread_cond_destroy(&ctx->done_cond);
 }
 
+/**
+ * @brief Zero-initializes context fields to prevent garbage.
+ * 
+ * @param ctx Pointer to the context structure.
+ */
+
 static void	init_context_zero(t_context *ctx)
 {
 	ctx->args = NULL;
@@ -35,19 +48,26 @@ static void	init_context_zero(t_context *ctx)
 	ctx->is_running = true;
 }
 
+/**
+ * @brief Allocates and initializes the global simulation context.
+ * 
+ * @param ctx Pointer to the context pointer to be allocated.
+ * @return true on success, false on allocation failure.
+ */
 bool	init_context(int argc, char **argv, t_context *ctx)
 {
 	init_context_zero(ctx);
+	if (pthread_mutex_init(&ctx->log_mutex, NULL) != 0)
+		return (false);
+	if (pthread_mutex_init(&ctx->sim_mutex, NULL) != 0)
+		return (pthread_mutex_destroy(&ctx->log_mutex), false);
+	if (pthread_cond_init(&ctx->done_cond, NULL) != 0)
+		return (pthread_mutex_destroy(&ctx->sim_mutex),
+			pthread_mutex_destroy(&ctx->log_mutex), false);
 	ctx->args = (t_args *)malloc(sizeof(t_args));
 	if (!ctx->args)
-		return (false);
+		return (free_context(ctx), false);
 	if (!parse_args(argc, argv, ctx))
-		return (free_context(ctx), false);
-	if (pthread_mutex_init(&ctx->log_mutex, NULL) != 0)
-		return (free_context(ctx), false);
-	if (pthread_mutex_init(&ctx->sim_mutex, NULL) != 0)
-		return (free_context(ctx), false);
-	if (pthread_cond_init(&ctx->done_cond, NULL) != 0)
 		return (free_context(ctx), false);
 	if (!init_coders(ctx))
 		return (free_context(ctx), false);

@@ -12,6 +12,13 @@
 
 #include "codexion.h"
 
+/**
+ * @brief Calculates the Earliest Deadline First (EDF) key.
+ * 
+ * @param coder Pointer to the coder struct.
+ * @return The absolute timestamp (ms) when the coder will burn out.
+ */
+
 long	edf_key(t_coder *coder)
 {
 	long	release_at;
@@ -19,6 +26,16 @@ long	edf_key(t_coder *coder)
 	release_at = coder->last_compile_start + coder->ctx->args->time_to_burnout;
 	return (release_at);
 }
+
+/**
+ * @brief Attempts to safely acquire a dongle.
+ * 
+ * Uses either FIFO or EDF scheduling algorithms via a priority queue.
+ * 
+ * @param coder Pointer to the requesting coder.
+ * @param dongle Pointer to the target dongle.
+ * @return true if acquired successfully, false if the sim stopped.
+ */
 
 bool	grab_dongle(t_coder *coder, t_dongle *dongle)
 {
@@ -48,6 +65,12 @@ bool	grab_dongle(t_coder *coder, t_dongle *dongle)
 	pthread_mutex_unlock(&dongle->mutex);
 	return (true);
 }
+
+/**
+ * @brief Releases a dongle and signals waiting threads.
+ * 
+ * @param dongle Pointer to the dongle to be released.
+ */
 
 void	release_dongle(t_dongle *dongle)
 {

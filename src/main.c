@@ -12,14 +12,79 @@
 
 #include "codexion.h"
 
+/**
+ * @brief Joins all active coder and monitor threads, waiting for them to finish.
+ * 
+ * @param ctx Pointer to the simulation context.
+ * @return true if all threads were joined successfully.
+ */
+static void	stop_sim(t_context *ctx, int num_to_join)
+{
+	int	i;
+
+	pthread_mutex_lock(&ctx->sim_mutex);
+	ctx->is_running = false;
+	pthread_mutex_unlock(&ctx->sim_mutex);
+	pthread_cond_broadcast(&ctx->done_cond);
+	i = 0;
+	while (i < num_to_join)
+	{
+		pthread_join(ctx->coders[i].thread_id, NULL);
+		i++;
+	}
+}
+
+/**
+ * @brief Spawns all coder and monitor threads to begin the simulation.
+ * 
+ * @param ctx Pointer to the simulation context.
+ * @return true if all threads spawned successfully, false otherwise.
+ */
+static bool	start_sim(t_context *ctx)
+{
+	int			i;
+	pthread_t	monitor_thread;
+
+	i = 0;
+	ctx->start_time = get_time_ms();
+	while (i < ctx->args->num_coders)
+	{
+		ctx->coders[i].last_compile_start = ctx->start_time;
+		if (pthread_create(&ctx->coders[i].thread_id, NULL,
+				coder_routine, &ctx->coders[i]) != 0)
+			return (stop_sim(ctx, i), false);
+		i++;
+	}
+	if (pthread_create(&monitor_thread, NULL, monitor_routine, ctx) != 0)
+		return (stop_sim(ctx, ctx->args->num_coders), false);
+	pthread_join(monitor_thread, NULL);
+	i = 0;
+	while (i < ctx->args->num_coders)
+		pthread_join(ctx->coders[i++].thread_id, NULL);
+	return (true);
+}
+
+/**
+ * @brief Entry point for the Codexion simulation program.
+ * 
+ * Parses arguments, initializes the context, starts the simulation,
+ * waits for completion, and cleans up resources.
+ * 
+ * @param argc Argument count.
+ * @param argv Argument vector.
+ * @return 0 on success, 1 on error.
+ */
 int	main(int argc, char **argv)
 {
 	t_context	ctx;
 
 	if (!init_context(argc, argv, &ctx))
 		return (1);
-	printf("Initialized %d coders and %d dongles\n", ctx.args->num_coders,
-		ctx.args->num_coders);
+	if (!start_sim(&ctx))
+	{
+		free_context(&ctx);
+		return (1);
+	}
 	free_context(&ctx);
 	return (0);
 }

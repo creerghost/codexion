@@ -13,11 +13,11 @@
 #include "codexion.h"
 
 /**
- * Creates a new min-heap priority queue.
+ * @brief Creates a new min-heap priority queue.
  *
- * heap: Pointer to the heap structure to initialize.
- * capacity: Maximum number of elements the heap can hold.
- * Returns true if successful, false on allocation failure.
+ * @param heap Pointer to the heap structure to initialize.
+ * @param capacity Maximum number of elements the heap can hold.
+ * @return true if successful, false on allocation failure.
  */
 bool	ft_heap_new(t_heap *heap, int capacity)
 {
@@ -33,13 +33,13 @@ bool	ft_heap_new(t_heap *heap, int capacity)
 }
 
 /**
- * Adds a new element to the heap and re-sorts the heap.
+ * @brief Adds a new element to the heap and re-sorts the heap.
  *
- * heap: Pointer to the heap structure.
- * coder_id: The coder ID to add.
- * key: The priority key to add.
- * Returns true if the element was added successfully,
-	false if the heap is full.
+ * @param heap Pointer to the heap structure.
+ * @param coder_id The coder ID to add.
+ * @param key The priority key to add.
+ * @return true if the element was added successfully,
+ *      false if the heap is full.
  */
 bool	ft_heappush(t_heap *heap, int coder_id, long key)
 {
@@ -56,12 +56,11 @@ bool	ft_heappush(t_heap *heap, int coder_id, long key)
 }
 
 /**
- * Removes and returns the element with the highest priority (minimum key)
- * from the heap.
+ * @brief Removes and returns the highest priority element from the heap.
  *
- * heap: Pointer to the heap structure.
- * coder_id: Pointer to store the coder ID of the removed element.
- * Returns true if an element was removed, false if the heap is empty.
+ * @param heap Pointer to the heap structure.
+ * @param coder_id Pointer to store the coder ID of the removed element.
+ * @return true if an element was removed, false if the heap is empty.
  */
 bool	ft_heappop(t_heap *heap, int *coder_id)
 {
@@ -78,12 +77,13 @@ bool	ft_heappop(t_heap *heap, int *coder_id)
 	return (true);
 }
 
-/*
-** Returns the element with the highest priority without removing it.
-** heap: Pointer to the heap structure.
-** Returns the coder ID of the element with the highest priority, or
-** -1 if the heap is empty.
-*/
+/**
+ * @brief Returns the element with the highest priority without removing it.
+ * 
+ * @param heap Pointer to the heap structure.
+ * @return The coder ID of the element with the highest priority, or
+ * -1 if the heap is empty.
+ */
 int	ft_heappeek(t_heap *heap)
 {
 	if (heap->size == 0)
@@ -92,9 +92,9 @@ int	ft_heappeek(t_heap *heap)
 }
 
 /**
- * Frees the memory used by the heap.
+ * @brief Frees the memory used by the heap.
  *
- * heap: Pointer to the heap structure.
+ * @param heap Pointer to the heap structure.
  */
 void	ft_heapfree(t_heap *heap)
 {

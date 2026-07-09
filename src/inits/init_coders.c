@@ -12,6 +12,13 @@
 
 #include "codexion.h"
 
+/**
+ * @brief Frees allocated coder structs up to a specified amount.
+ * 
+ * @param ctx Pointer to the simulation context.
+ * @param amount Number of coders to free.
+ */
+
 void	free_coders(t_context *ctx, unsigned int amount)
 {
 	unsigned int	i;
@@ -24,6 +31,14 @@ void	free_coders(t_context *ctx, unsigned int amount)
 	free(ctx->coders);
 	ctx->coders = NULL;
 }
+
+/**
+ * @brief Initializes a single coder struct with its starting state.
+ * 
+ * @param ctx Pointer to the simulation context.
+ * @param i Index of the coder.
+ * @return true if successful, false on failure.
+ */
 
 static bool	init_single_coder(t_context *ctx, int i)
 {
@@ -42,6 +57,12 @@ static bool	init_single_coder(t_context *ctx, int i)
 	return (true);
 }
 
+/**
+ * @brief Allocates and initializes the array of coder structs.
+ * 
+ * @param ctx Pointer to the simulation context.
+ * @return true on success, false on allocation failure.
+ */
 bool	init_coders(t_context *ctx)
 {
 	int	i;
