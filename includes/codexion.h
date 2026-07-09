@@ -77,4 +77,7 @@ void	release_dongle(t_dongle *dongle);
 /* routine.c */
 void	*coder_routine(void *arg);
 
+/* monitor.c */
+void	*monitor_routine(void *arg);
+
 #endif

@@ -17,6 +17,8 @@
 */
 void	log_msg(t_context *ctx, int coder_id, char *msg)
 {
+	if (!is_sim_running(ctx))
+		return ;
 	pthread_mutex_lock(&(ctx->log_mutex));
 	printf("%ld %d %s\n", get_time_ms() - ctx->start_time, coder_id, msg);
 	pthread_mutex_unlock(&(ctx->log_mutex));
