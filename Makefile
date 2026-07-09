@@ -6,7 +6,7 @@
 #    By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/08 22:38:27 by vlnikola          #+#    #+#              #
-#    Updated: 2026/07/09 01:38:11 by vlnikola         ###   ########.fr        #
+#    Updated: 2026/07/09 16:03:11 by vlnikola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,9 @@ test-parser: re
 test-heap: re
 	@$(MAKE) -C $(TEST_DIR) test_heap
 
+test-dongle: re
+	@$(MAKE) -C $(TEST_DIR) test_dongle
+
 help:
 	@printf "Welcome to the Makefile for the project!\n"
 	@printf "This project has been created as a part of 42 curriculum by vlnikola.\n"
@@ -95,6 +98,7 @@ help:
 	@printf "  test         - Run all tests\n"
 	@printf "  test-parser  - Run parser tests\n"
 	@printf "  test-heap    - Run heap tests\n"
+	@printf "  test-dongle  - Run dongle tests\n"
 	@printf "  help         - Show this help message\n"
 
-.PHONY: all clean fclean re test test-parser test-heap help
+.PHONY: all clean fclean re test test-parser test-heap test-dongle help
