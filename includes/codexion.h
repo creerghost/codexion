@@ -74,4 +74,7 @@ void	free_context(t_context *ctx);
 bool	grab_dongle(t_coder *coder, t_dongle *dongle);
 void	release_dongle(t_dongle *dongle);
 
+/* routine.c */
+void	*coder_routine(void *arg);
+
 #endif
