@@ -23,6 +23,7 @@ INCLUDES	= -Iincludes
 SRC			= $(SRC_DIR)/main.c \
 				$(SRC_DIR)/heap.c \
 				$(SRC_DIR)/parser.c \
+				$(SRC_DIR)/dongle.c \
 				$(SRC_DIR)/utils/logging.c \
 				$(SRC_DIR)/utils/atoi_codex.c \
 				$(SRC_DIR)/utils/heap_utils.c \

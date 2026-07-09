@@ -23,6 +23,7 @@ CFLAGS = -Wall -Wextra -Werror -pthread -I../includes
 
 OBJS = $(OBJ_DIR)/heap.o \
 	$(OBJ_DIR)/parser.o \
+	$(OBJ_DIR)/dongle.o \
 	$(OBJ_DIR)/utils/logging.o \
 	$(OBJ_DIR)/utils/atoi_codex.o \
 	$(OBJ_DIR)/utils/heap_utils.o \
@@ -52,6 +53,9 @@ $(EXEC_DIR)/test_parser: $(C_MAINS_DIR)/test_parser.c $(OBJS) | $(EXEC_DIR)
 $(EXEC_DIR)/test_heap: $(C_MAINS_DIR)/test_heap.c $(OBJS) | $(EXEC_DIR)
 	$(CC) $(CFLAGS) -o $@ $^
 
+$(EXEC_DIR)/test_dongle: $(C_MAINS_DIR)/test_dongle.c $(OBJS) | $(EXEC_DIR)
+	$(CC) $(CFLAGS) -o $@ $^
+
 test_parser: install $(EXEC_DIR)/test_parser
 	@printf "$(GREEN)Running parser tests...$(RESET)\n"
 	@$(PYTHON) $(PY_DIR)/test_parser.py
@@ -61,8 +65,13 @@ test_heap: install $(EXEC_DIR)/test_heap
 	@printf "$(GREEN)Running heap tests...$(RESET)\n"
 	@$(PYTHON) $(PY_DIR)/test_heap.py
 	@printf "$(GREEN)Heap tests passed$(RESET)\n"
+	
+test_dongle: install $(EXEC_DIR)/test_dongle
+	@printf "$(GREEN)Running dongle tests...$(RESET)\n"
+	@$(PYTHON) $(PY_DIR)/test_dongle.py
+	@printf "$(GREEN)Dongle tests passed$(RESET)\n"
 
-test_all: test_parser test_heap
+test_all: test_parser test_heap test_dongle
 	@printf "$(GREEN)\nAll tests passed!$(RESET)\n"
 
 clean:

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -40,7 +40,6 @@ static int	validate_positive(int *parsed)
 
 static int	assign_args(t_context *ctx, int *parsed, char *sched)
 {
-
 	ctx->args->num_coders = parsed[0];
 	ctx->args->time_to_burnout = parsed[1];
 	ctx->args->time_to_compile = parsed[2];
@@ -53,8 +52,7 @@ static int	assign_args(t_context *ctx, int *parsed, char *sched)
 	else if (!strcmp(sched, "EDF") || !strcmp(sched, "edf"))
 		ctx->args->scheduler = EDF;
 	else
-		return (fprintf(stderr, must_be(), "scheduler",
-						"fifo or edf"), 0);
+		return (fprintf(stderr, must_be(), "scheduler", "fifo or edf"), 0);
 	return (1);
 }
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_heap.c                                        :+:      :+:    :+:   */
+/*   test_heap.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/09 01:32:02 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/07/09 01:32:03 by vlnikola         ###   ########.fr       */
+/*   Created: 2026/07/08 12:54:20 by vlnikola          #+#    #+#             */
+/*   Updated: 2026/07/08 14:02:20 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_heap heap;
-	int i;
-	int popped_id;
+	t_heap	heap;
+	int		i;
+	int		popped_id;
 
 	if (argc < 2)
 		return (1);
-	
 	if (!ft_heap_new(&heap, argc - 1))
 		return (1);
-	
 	i = 1;
 	while (i < argc)
 	{
 		ft_heappush(&heap, atoi(argv[i]), atoi(argv[i]));
 		i++;
 	}
-	
 	while (ft_heappop(&heap, &popped_id))
 	{
 		printf("%d ", popped_id);
