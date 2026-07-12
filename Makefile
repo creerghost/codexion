@@ -20,6 +20,8 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -pthread
 INCLUDES	= -Iincludes
 
+ARGS ?=
+
 SRC			= $(SRC_DIR)/main.c \
 				$(SRC_DIR)/heap.c \
 				$(SRC_DIR)/parser.c \
@@ -58,6 +60,13 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
+
+valgrind: all
+	valgrind ./$(NAME) $(ARGS)
+
+helgrind: all
+	valgrind --tool=helgrind ./$(NAME) $(ARGS)
+
 
 clean:
 	@printf "$(RESET)"
