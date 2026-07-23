@@ -39,7 +39,6 @@ void	free_coders(t_context *ctx, unsigned int amount)
  * - i: Index of the coder.
  * Returns: true if successful, false on failure.
  */
-
 static bool	init_single_coder(t_context *ctx, int i)
 {
 	ctx->coders[i].id = i + 1;

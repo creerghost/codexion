@@ -1,0 +1,77 @@
+[
+    {
+        "directory": "/home/nikolaev/codexion_v2",
+        "command": "/usr/bin/gcc -Wall -Wextra -Werror -pthread -Iincludes -c src/main.c -o obj/main.o",
+        "file": "/home/nikolaev/codexion_v2/src/main.c"
+    },
+    {
+        "directory": "/home/nikolaev/codexion_v2",
+        "command": "/usr/bin/gcc -Wall -Wextra -Werror -pthread -Iincludes -c src/heap.c -o obj/heap.o",
+        "file": "/home/nikolaev/codexion_v2/src/heap.c"
+    },
+    {
+        "directory": "/home/nikolaev/codexion_v2",
+        "command": "/usr/bin/gcc -Wall -Wextra -Werror -pthread -Iincludes -c src/parser.c -o obj/parser.o",
+        "file": "/home/nikolaev/codexion_v2/src/parser.c"
+    },
+    {
+        "directory": "/home/nikolaev/codexion_v2",
+        "command": "/usr/bin/gcc -Wall -Wextra -Werror -pthread -Iincludes -c src/dongle.c -o obj/dongle.o",
+        "file": "/home/nikolaev/codexion_v2/src/dongle.c"
+    },
+    {
+        "directory": "/home/nikolaev/codexion_v2",
+        "command": "/usr/bin/gcc -Wall -Wextra -Werror -pthread -Iincludes -c src/routine.c -o obj/routine.o",
+        "file": "/home/nikolaev/codexion_v2/src/routine.c"
+    },
+    {
+        "directory": "/home/nikolaev/codexion_v2",
+        "command": "/usr/bin/gcc -Wall -Wextra -Werror -pthread -Iincludes -c src/monitor.c -o obj/monitor.o",
+        "file": "/home/nikolaev/codexion_v2/src/monitor.c"
+    },
+    {
+        "directory": "/home/nikolaev/codexion_v2",
+        "command": "/usr/bin/gcc -Wall -Wextra -Werror -pthread -Iincludes -c src/utils/logging.c -o obj/utils/logging.o",
+        "file": "/home/nikolaev/codexion_v2/src/utils/logging.c"
+    },
+    {
+        "directory": "/home/nikolaev/codexion_v2",
+        "command": "/usr/bin/gcc -Wall -Wextra -Werror -pthread -Iincludes -c src/utils/atoi_codex.c -o obj/utils/atoi_codex.o",
+        "file": "/home/nikolaev/codexion_v2/src/utils/atoi_codex.c"
+    },
+    {
+        "directory": "/home/nikolaev/codexion_v2",
+        "command": "/usr/bin/gcc -Wall -Wextra -Werror -pthread -Iincludes -c src/utils/heap_utils.c -o obj/utils/heap_utils.o",
+        "file": "/home/nikolaev/codexion_v2/src/utils/heap_utils.c"
+    },
+    {
+        "directory": "/home/nikolaev/codexion_v2",
+        "command": "/usr/bin/gcc -Wall -Wextra -Werror -pthread -Iincludes -c src/utils/time_utils.c -o obj/utils/time_utils.o",
+        "file": "/home/nikolaev/codexion_v2/src/utils/time_utils.c"
+    },
+    {
+        "directory": "/home/nikolaev/codexion_v2",
+        "command": "/usr/bin/gcc -Wall -Wextra -Werror -pthread -Iincludes -c src/utils/utils.c -o obj/utils/utils.o",
+        "file": "/home/nikolaev/codexion_v2/src/utils/utils.c"
+    },
+    {
+        "directory": "/home/nikolaev/codexion_v2",
+        "command": "/usr/bin/gcc -Wall -Wextra -Werror -pthread -Iincludes -c src/utils/util_strings.c -o obj/utils/util_strings.o",
+        "file": "/home/nikolaev/codexion_v2/src/utils/util_strings.c"
+    },
+    {
+        "directory": "/home/nikolaev/codexion_v2",
+        "command": "/usr/bin/gcc -Wall -Wextra -Werror -pthread -Iincludes -c src/inits/init_coders.c -o obj/inits/init_coders.o",
+        "file": "/home/nikolaev/codexion_v2/src/inits/init_coders.c"
+    },
+    {
+        "directory": "/home/nikolaev/codexion_v2",
+        "command": "/usr/bin/gcc -Wall -Wextra -Werror -pthread -Iincludes -c src/inits/init_dongles.c -o obj/inits/init_dongles.o",
+        "file": "/home/nikolaev/codexion_v2/src/inits/init_dongles.c"
+    },
+    {
+        "directory": "/home/nikolaev/codexion_v2",
+        "command": "/usr/bin/gcc -Wall -Wextra -Werror -pthread -Iincludes -c src/inits/init_context.c -o obj/inits/init_context.o",
+        "file": "/home/nikolaev/codexion_v2/src/inits/init_context.c"
+    }
+]
