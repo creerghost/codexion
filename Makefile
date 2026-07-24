@@ -6,7 +6,7 @@
 #    By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/08 22:38:27 by vlnikola          #+#    #+#              #
-#    Updated: 2026/07/09 16:03:11 by vlnikola         ###   ########.fr        #
+#    Updated: 2026/07/24 13:23:06 by vlnikola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,6 +105,8 @@ help:
 	@printf "\n"
 	@printf "Available targets:\n"
 	@printf "  all          - Compile the project\n"
+	@printf "  valgrind     - Run ./codexion with valgrind. Args should be provided. Usage: make valgrind ARGS='3 800 200 200 7 0 FIFO'\n"
+	@printf "  helgrind     - Run ./codexion with helgrind. Args should be provided. Usage: make helgrind ARGS='3 800 200 200 7 0 FIFO'\n"
 	@printf "  clean        - Remove object files and caches\n"
 	@printf "  fclean       - Remove object files, caches and the project\n"
 	@printf "  fclean-venv  - Remove object files, caches, the project and virtual environment\n"
