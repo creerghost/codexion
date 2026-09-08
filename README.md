@@ -44,4 +44,4 @@ Codexion - what is it
 ### AI Usage Disclosure
 
 - AI will be used only as a guiding assistant in test driven development approach
-- Kimi K3 / ChatGPT 6 Astra (Opencode / Codex harnesses)
+- Grok 4.6 / ChatGPT 6 Astra (Opencode / Codex harnesses)
