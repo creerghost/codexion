@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/09 00:38:08 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/09 00:38:22 by vlnikola         ###   ########.fr       */
+/*   Created: 2026/09/09 00:36:54 by vlnikola          #+#    #+#             */
+/*   Updated: 2026/09/09 00:38:58 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#ifndef PARSE_H
+# define PARSE_H
 
-int	main(void)
-{
-	return (0);
-}
+# include "structs/args.h"
+
+int	parse_args(int ac, char **av, t_args *args);
+
+#endif

@@ -1,18 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   args.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/09 00:38:08 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/09 00:38:22 by vlnikola         ###   ########.fr       */
+/*   Created: 2026/09/08 23:54:33 by vlnikola          #+#    #+#             */
+/*   Updated: 2026/09/08 23:55:32 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#ifndef ARGS_H
+# define ARGS_H
 
-int	main(void)
+typedef enum e_scheduler
 {
-	return (0);
-}
+	FIFO,
+	EDF
+}						t_scheduler;
+
+typedef struct s_args
+{
+	int					num_coders;
+	long				time_to_burnout;
+	long				time_to_compile;
+	long				time_to_debug;
+	long				time_to_refactor;
+	int					num_compiles_req;
+	long				dongle_cooldown;
+	t_scheduler			scheduler;
+}						t_args;
+
+#endif

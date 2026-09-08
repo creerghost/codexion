@@ -1,2 +1,8 @@
 obj/
 codexion
+
+# for clang
+compile_commands.json
+
+run_tests
+.cache

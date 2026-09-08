@@ -6,7 +6,7 @@
 #    By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/08 22:00:53 by vlnikola          #+#    #+#              #
-#    Updated: 2026/09/08 22:14:59 by vlnikola         ###   ########.fr        #
+#    Updated: 2026/09/09 00:31:50 by vlnikola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,11 @@ OBJ_DIR		= obj
 TEST_DIR	= tests
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -pthread
-INCLUDES	= -Iincludes
+INCLUDES	= -Iinclude
 
-SRC			= $(SRC_DIR)/main.c
+SRC			= $(SRC_DIR)/main.c \
+			$(SRC_DIR)/parser/flagged_atoi.c \
+			$(SRC_DIR)/parser/process_args.c
 
 OBJ			= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
@@ -59,6 +61,9 @@ fclean: clean
 
 re: fclean all
 
+test: all
+	@$(MAKE) -C $(TEST_DIR) run
+
 valgrind: all
 	valgrind ./$(NAME) $(ARGS)
 
@@ -79,4 +84,4 @@ help:
 	@printf "  test         - Run all tests\n"
 	@printf "  help         - Show this help message\n"
 
-.PHONY: all clean fclean re valgrind helgrind help
+.PHONY: all clean fclean re test valgrind helgrind help

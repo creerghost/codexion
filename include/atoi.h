@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   atoi.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/09 00:38:08 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/09 00:38:22 by vlnikola         ###   ########.fr       */
+/*   Created: 2026/09/09 00:44:48 by vlnikola          #+#    #+#             */
+/*   Updated: 2026/09/09 00:45:38 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#ifndef ATOI_H
+# define ATOI_H
 
-int	main(void)
-{
-	return (0);
-}
+int	atoi_flagged(const char *str, int *result);
+
+#endif
