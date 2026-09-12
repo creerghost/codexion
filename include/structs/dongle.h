@@ -1,17 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   dongle.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/09 00:38:08 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/12 17:12:25 by vlnikola         ###   ########.fr       */
+/*   Created: 2026/09/12 16:59:39 by vlnikola          #+#    #+#             */
+/*   Updated: 2026/09/12 18:07:26 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(void)
+
+#ifndef DONGLE_H
+# define CODER_H
+
+#include "structs/queue.h"
+# include <pthread.h>
+
+typedef struct  	s_dongle
 {
-	
-	return (0);
-}
+	long long		last_release_time;
+	pthread_mutex_t	mutex;
+	t_queue			queue;
+}               	t_dongle;
+
+#endif

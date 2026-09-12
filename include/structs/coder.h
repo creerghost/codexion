@@ -1,17 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   coder.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/09 00:38:08 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/12 17:12:25 by vlnikola         ###   ########.fr       */
+/*   Created: 2026/09/12 16:55:08 by vlnikola          #+#    #+#             */
+/*   Updated: 2026/09/12 17:56:52 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(void)
+#ifndef CODER_H
+# define CODER_H
+
+# include "dongle.h"
+#include <bits/pthreadtypes.h>
+# include <pthread.h>
+
+typedef struct  	s_coder
 {
+	int         	id;
+	long long   	last_release_time;
 	
-	return (0);
-}
+	t_dongle		*left_dongle;
+	t_dongle		*right_dongle;
+	pthread_t   	thread;
+	pthread_mutex_t	mutex;
+	pthread_cond_t	cond;
+	   
+}               	t_coder;
+
+#endif

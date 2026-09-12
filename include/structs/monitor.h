@@ -1,17 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   monitor.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/09 00:38:08 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/12 17:12:25 by vlnikola         ###   ########.fr       */
+/*   Created: 2026/09/12 17:09:39 by vlnikola          #+#    #+#             */
+/*   Updated: 2026/09/12 17:11:02 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(void)
+# ifndef MONITOR_H
+# define MONITOR_H
+
+typedef struct	s_monitor
 {
 	
-	return (0);
-}
+}				t_monitor;
+
+#endif

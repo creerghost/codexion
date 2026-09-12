@@ -1,17 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   context.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/09 00:38:08 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/12 17:12:25 by vlnikola         ###   ########.fr       */
+/*   Created: 2026/09/12 17:03:44 by vlnikola          #+#    #+#             */
+/*   Updated: 2026/09/12 18:33:13 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(void)
+#ifndef CONTEXT_H
+# define CONTEXT_H
+
+# include <pthread.h>
+# include "args.h"
+
+typedef struct	s_context
 {
-	
-	return (0);
-}
+    t_args      args;
+}				t_context;
+
+#endif

@@ -2,8 +2,6 @@
 
 # Codexion
 
-- test driven development approach will be used
-
 ## Table of Contents
 
 1. [Description](#description)
@@ -43,5 +41,3 @@ Codexion - what is it
 
 ### AI Usage Disclosure
 
-- AI will be used only as a guiding assistant in test driven development approach
-- Grok 4.6 / ChatGPT 6 Astra (Opencode / Codex harnesses)
