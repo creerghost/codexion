@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/13 17:55:21 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 18:11:51 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,5 @@ bool	parse_number(const char *str, int *result)
 		str++;
 	}
 	*result = num;
-	return (false);
+	return (true);
 }
