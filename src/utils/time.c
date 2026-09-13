@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/13 17:41:42 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 17:52:32 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ long long	current_time_ms(void)
 {
 	struct timeval	time;
 
-	if (gettimeofday(&time, NULL) == 0)
+	if (gettimeofday(&time, NULL) != 0)
 		return (0);
 	return ((time.tv_sec * 1000LL) + (time.tv_usec) / 1000);
 }

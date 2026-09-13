@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/13 14:13:54 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 17:54:47 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #include <string.h>
 #include "modules/parser_api.h"
 
-static int	validate_if_positive(int i, int num)
+static bool	validate_if_positive(const size_t i, const int num)
 {
 	if (i == 1 || i == 6)
 		return (num > 0);
 	return (num >= 0);
 }
 
-static int	assign_args(t_args *args, int *nums, char *scheduler)
+static bool	assign_args(t_args *args, int *nums, char *scheduler)
 {
 	args->num_coders = nums[0];
 	args->time_to_burnout = nums[1];
@@ -36,29 +36,29 @@ static int	assign_args(t_args *args, int *nums, char *scheduler)
 		args->scheduler = EDF;
 	else
 		return (fprintf(stderr, "Error: scheduler must be \"fifo\" or "
-				"\"edf\"\n"), 0);
-	return (1);
+				"\"edf\"\n"), false);
+	return (true);
 }
 
-int	parse_args(int ac, char **av, t_args *args)
+bool	parse_args(int ac, char **av, t_args *args)
 {
-	int	i;
+	size_t	i;
 	int	nums[7];
 
 	if (ac != 9)
 		return (printf("Usage: ./codexion <number_of_coders> "
 				"<time_to_burnout> <time_to_compile> <time_to_debug> "
 				"<time_to_refactor> <number_of_compiles_required> "
-				"<dongle_cooldown> <scheduler>\n"), 0);
+				"<dongle_cooldown> <scheduler>\n"), false);
 	i = 1;
 	while (i < 8)
 	{
 		if (!parse_number(av[i], &nums[i - 1]))
 			return (fprintf(stderr, "Error: argument %i must be a "
-					"non-negative integer\n", i), 0);
+					"non-negative integer\n", i), false);
 		if (!validate_if_positive(i, nums[i - 1]))
 			return (fprintf(stderr, "Error: argument %i must be "
-					"positive\n", i), 0);
+					"positive\n", i), false);
 		i++;
 	}
 	return (assign_args(args, nums, av[8]));

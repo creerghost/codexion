@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/13 14:14:05 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 17:55:21 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@ bool	parse_number(const char *str, int *result)
 		str++;
 	if (*str == '-' || *str == '+')
 		if (*str++ == '-')
-			return (0);
+			return (false);
 	if (!*str || (*str < '0' || *str > '9'))
-		return (0);
+		return (false);
 	while (*str)
 	{
 		if (*str < '0' || *str > '9')
-			return (0);
+			return (false);
 		num = num * 10 + (*str - '0');
 		if (num > INT_MAX || num < INT_MIN)
-			return (0);
+			return (false);
 		str++;
 	}
 	*result = num;
-	return (1);
+	return (false);
 }
