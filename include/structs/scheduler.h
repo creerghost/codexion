@@ -14,6 +14,8 @@
 # define SCHEDULER_H
 
 # include <pthread.h>
+# include <stdbool.h>
+# include <stddef.h>
 
 typedef struct s_context	t_context;
 typedef struct s_coder		t_coder;
@@ -25,10 +27,10 @@ typedef struct s_scheduler
 	t_context		*context;
 	t_coder			*coders;
 	t_dongle		*dongles;
-	int				count;
+	size_t			count;
 	pthread_mutex_t	mutex;
 	pthread_cond_t	condition;
-	int				notified;
+	bool			notified;
 }	t_scheduler;
 
 #endif

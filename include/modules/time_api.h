@@ -16,7 +16,7 @@
 # include "structs/context.h"
 
 long long	current_time_ms(void);
-long long	simulation_time_ms(t_context *context);
+long long	simulation_time_ms(const t_context *context);
 void		interruptible_sleep(t_context *context, long long duration);
 
 #endif

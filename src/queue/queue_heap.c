@@ -22,7 +22,7 @@ static void	swap_requests(t_request *first, t_request *second)
 	*second = tmp;
 }
 
-static void	heapify_down(t_queue *queue, size_t idx)
+static void	heapify_down(t_queue *queue, size_t index)
 {
 	size_t	left;
 	size_t	right;
@@ -30,25 +30,25 @@ static void	heapify_down(t_queue *queue, size_t idx)
 
 	while (1)
 	{
-		left = idx * 2 + 1;
+		left = index * 2 + 1;
 		right = left + 1;
-		best = idx;
+		best = index;
 		if (left < queue->size && request_precedes(
 				&queue->heap[left], &queue->heap[best], queue->mode))
 			best = left;
 		if (right < queue->size && request_precedes(
 				&queue->heap[right], &queue->heap[best], queue->mode))
 			best = right;
-		if (best == idx)
+		if (best == index)
 			break ;
-		swap_requests(&queue->heap[idx], &queue->heap[best]);
-		idx = best;
+		swap_requests(&queue->heap[index], &queue->heap[best]);
+		index = best;
 	}
 }
 
 bool	queue_push(t_queue *queue, t_request request)
 {
-	size_t	idx;
+	size_t	index;
 	size_t	parent;
 
 	if (queue == NULL || queue->heap == NULL)
@@ -56,17 +56,17 @@ bool	queue_push(t_queue *queue, t_request request)
 	if (queue->size >= queue->capacity)
 		return (false);
 	request.sequence = queue->next_sequence++;
-	idx = queue->size;
-	queue->heap[idx] = request;
+	index = queue->size;
+	queue->heap[index] = request;
 	queue->size++;
-	while (idx > 0)
+	while (index > 0)
 	{
-		parent = (idx - 1) / 2;
-		if (!request_precedes(&queue->heap[idx],
+		parent = (index - 1) / 2;
+		if (!request_precedes(&queue->heap[index],
 				&queue->heap[parent], queue->mode))
 			break ;
-		swap_requests(&queue->heap[idx], &queue->heap[parent]);
-		idx = parent;
+		swap_requests(&queue->heap[index], &queue->heap[parent]);
+		index = parent;
 	}
 	return (true);
 }

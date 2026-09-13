@@ -24,7 +24,7 @@ void	free_scheduler(t_scheduler *scheduler)
 	scheduler->coders = NULL;
 	scheduler->dongles = NULL;
 	scheduler->count = 0;
-	scheduler->notified = 0;
+	scheduler->notified = false;
 }
 
 bool	init_scheduler(t_scheduler *scheduler, t_context *context,
@@ -35,7 +35,7 @@ bool	init_scheduler(t_scheduler *scheduler, t_context *context,
 		return (false);
 	scheduler->context = NULL;
 	scheduler->count = 0;
-	scheduler->notified = 0;
+	scheduler->notified = false;
 	if (pthread_mutex_init(&scheduler->mutex, NULL))
 		return (false);
 	if (pthread_cond_init(&scheduler->condition, NULL))
@@ -43,6 +43,6 @@ bool	init_scheduler(t_scheduler *scheduler, t_context *context,
 	scheduler->context = context;
 	scheduler->coders = coders;
 	scheduler->dongles = dongles;
-	scheduler->count = context->args->num_coders;
+	scheduler->count = (size_t)context->args->num_coders;
 	return (true);
 }

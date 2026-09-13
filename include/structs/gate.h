@@ -14,12 +14,13 @@
 # define GATE_H
 
 # include <pthread.h>
+# include <stdbool.h>
 
 typedef struct s_gate
 {
 	pthread_mutex_t	mutex;
 	pthread_cond_t	condition;
-	int				ready;
+	bool			ready;
 }	t_gate;
 
 #endif

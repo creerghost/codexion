@@ -19,7 +19,7 @@ bool	context_is_running(t_context *context)
 	if (context == NULL)
 		return (false);
 	pthread_mutex_lock(&context->state_mutex);
-	running = (context->is_running != 0);
+	running = context->is_running;
 	pthread_mutex_unlock(&context->state_mutex);
 	return (running);
 }

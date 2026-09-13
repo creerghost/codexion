@@ -14,6 +14,7 @@
 # define MONITOR_H
 
 # include <pthread.h>
+# include <stddef.h>
 
 typedef struct s_context	t_context;
 typedef struct s_coder		t_coder;
@@ -23,7 +24,7 @@ typedef struct s_monitor
 	pthread_t	thread;
 	t_context	*context;
 	t_coder		*coders;
-	int			count;
+	size_t		count;
 }	t_monitor;
 
 #endif

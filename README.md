@@ -123,6 +123,17 @@ Headers are not compiled or added to `SRC` in the Makefile. Source files
 include the headers they need. The private `src/queue/queue_internal.h` header
 belongs to the queue implementation and is not exposed as a public interface.
 
+Type and naming conventions:
+
+- `bool` stores predicates and initialization flags;
+- `size_t` stores array sizes, capacities, and zero-based array positions;
+- `int` stores parsed values, compile counts, and externally displayed coder
+  IDs;
+- `index` consistently names an array position, while `coder_id` names the
+  one-based value printed in logs;
+- `const` is used for borrowed input that a function only reads, but not for an
+  object whose mutex must be locked or whose state may change.
+
 ## Architecture and Wiring
 
 `t_application` is the only object that sees and owns the complete program.
@@ -364,7 +375,8 @@ scaffolding, review, and documentation assistant. It helped explain the subject,
 review the parser and initialization code, compare architectural approaches,
 define ownership around `t_application`, create struct and module headers,
 organize source skeletons, implement resource initialization and cleanup, and
-document the intended architecture and runtime wiring.
+standardize boolean, index, count, naming, and const conventions. It also
+helped document the intended architecture and runtime wiring.
 
 AI did not implement the concurrency simulation, scheduler routine, dongle
 arbitration, monitor routine, logger, or coder routine. AI-assisted code and

@@ -24,7 +24,7 @@ long long	current_time_ms(void)
 	return ((time.tv_sec * 1000LL) + (time.tv_usec) / 1000);
 }
 
-long long	simulation_time_ms(t_context *context)
+long long	simulation_time_ms(const t_context *context)
 {
 	return (current_time_ms() - context->start_time);
 }

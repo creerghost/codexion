@@ -14,12 +14,13 @@
 # define DONGLE_H
 
 # include <pthread.h>
+# include <stdbool.h>
 # include "structs/queue.h"
 
 typedef struct s_dongle
 {
 	int				id;
-	int				is_busy;
+	bool			is_busy;
 	long long		available_at;
 	pthread_mutex_t	mutex;
 	t_queue			queue;

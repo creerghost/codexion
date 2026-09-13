@@ -23,7 +23,7 @@ bool	init_context(t_context *context, const t_args *args)
 		return (pthread_mutex_destroy(&context->state_mutex), false);
 	context->args = args;
 	context->start_time = 0;
-	context->is_running = 1;
+	context->is_running = true;
 	return (true);
 }
 
@@ -33,7 +33,7 @@ void	free_context(t_context *context)
 		return ;
 	context->args = NULL;
 	context->start_time = 0;
-	context->is_running = 0;
+	context->is_running = false;
 	pthread_mutex_destroy(&context->state_mutex);
 	pthread_mutex_destroy(&context->log_mutex);
 }
@@ -41,6 +41,6 @@ void	free_context(t_context *context)
 void	stop_context(t_context *context)
 {
 	pthread_mutex_lock(&context->state_mutex);
-	context->is_running = 0;
+	context->is_running = false;
 	pthread_mutex_unlock(&context->state_mutex);
 }

@@ -14,6 +14,7 @@
 # define CONTEXT_H
 
 # include <pthread.h>
+# include <stdbool.h>
 
 typedef struct s_args	t_args;
 
@@ -21,7 +22,7 @@ typedef struct s_context
 {
 	const t_args		*args;
 	long long			start_time;
-	int					is_running;
+	bool				is_running;
 	pthread_mutex_t		state_mutex;
 	pthread_mutex_t		log_mutex;
 }	t_context;

@@ -14,11 +14,12 @@
 # define CODER_API_H
 
 # include <stdbool.h>
+# include <stddef.h>
 # include "structs/coder.h"
 
-bool		init_coders(t_coder **coders, int count, t_context *context,
+bool		init_coders(t_coder **coders, size_t count, t_context *context,
 				t_dongle *dongles);
-void		free_coders(t_coder *coders, int count);
+void		free_coders(t_coder *coders, size_t count);
 void		*coder_routine(void *argument);
 long long	coder_last_compile(t_coder *coder);
 int			coder_compile_count(t_coder *coder);

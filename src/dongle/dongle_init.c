@@ -14,25 +14,26 @@
 #include "modules/queue_api.h"
 #include <stdlib.h>
 
-void	free_dongles(t_dongle *dongles, int count)
+void	free_dongles(t_dongle *dongles, size_t count)
 {
-	int	idx;
+	size_t	index;
 
 	if (dongles == NULL)
 		return ;
-	idx = 0;
-	while (idx < count)
+	index = 0;
+	while (index < count)
 	{
-		free_queue(&dongles[idx].queue);
-		pthread_mutex_destroy(&dongles[idx].mutex);
-		idx++;
+		free_queue(&dongles[index].queue);
+		pthread_mutex_destroy(&dongles[index].mutex);
+		index++;
 	}
 	free(dongles);
 }
 
-static bool	init_dongle(t_dongle *dongle, t_scheduler_mode mode, int capacity)
+static bool	init_dongle(t_dongle *dongle, t_scheduler_mode mode,
+		size_t capacity)
 {
-	dongle->is_busy = 0;
+	dongle->is_busy = false;
 	dongle->available_at = 0;
 	if (pthread_mutex_init(&dongle->mutex, NULL))
 		return (false);
@@ -41,23 +42,24 @@ static bool	init_dongle(t_dongle *dongle, t_scheduler_mode mode, int capacity)
 	return (true);
 }
 
-bool	init_dongles(t_dongle **dongles, int count, t_scheduler_mode mode)
+bool	init_dongles(t_dongle **dongles, size_t count,
+		t_scheduler_mode mode)
 {
-	int			idx;
+	size_t		index;
 	t_dongle	*new_dongles;
 
-	if (dongles == NULL || count <= 0)
+	if (dongles == NULL || count == 0)
 		return (false);
 	new_dongles = (t_dongle *)malloc(sizeof(t_dongle) * count);
 	if (!new_dongles)
 		return (false);
-	idx = 0;
-	while (idx < count)
+	index = 0;
+	while (index < count)
 	{
-		new_dongles[idx].id = idx;
-		if (!init_dongle(&new_dongles[idx], mode, count))
-			return (free_dongles(new_dongles, idx), false);
-		idx++;
+		new_dongles[index].id = (int)index;
+		if (!init_dongle(&new_dongles[index], mode, count))
+			return (free_dongles(new_dongles, index), false);
+		index++;
 	}
 	*dongles = new_dongles;
 	return (true);

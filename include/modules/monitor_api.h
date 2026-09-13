@@ -13,10 +13,11 @@
 #ifndef MONITOR_API_H
 # define MONITOR_API_H
 
+# include <stddef.h>
 # include "structs/monitor.h"
 
 void	init_monitor(t_monitor *monitor, t_context *context,
-			t_coder *coders, int count);
+			t_coder *coders, size_t count);
 void	*monitor_routine(void *argument);
 
 #endif

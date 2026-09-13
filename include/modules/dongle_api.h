@@ -14,10 +14,12 @@
 # define DONGLE_API_H
 
 # include <stdbool.h>
+# include <stddef.h>
 # include "structs/dongle.h"
 
-bool	init_dongles(t_dongle **dongles, int count, t_scheduler_mode mode);
-void	free_dongles(t_dongle *dongles, int count);
+bool	init_dongles(t_dongle **dongles, size_t count,
+			t_scheduler_mode mode);
+void	free_dongles(t_dongle *dongles, size_t count);
 bool	dongle_add_request(t_dongle *dongle, t_request request);
 void	dongle_release(t_dongle *dongle, long long release_time,
 			long long cooldown);

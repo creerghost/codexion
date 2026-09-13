@@ -16,7 +16,7 @@ bool	init_gate(t_gate *gate)
 {
 	if (gate == NULL)
 		return (false);
-	gate->ready = 0;
+	gate->ready = false;
 	if (pthread_mutex_init(&gate->mutex, NULL))
 		return (false);
 	if (pthread_cond_init(&gate->condition, NULL))
@@ -27,16 +27,16 @@ bool	init_gate(t_gate *gate)
 void	gate_wait(t_gate *gate)
 {
 	pthread_mutex_lock(&gate->mutex);
-	while (gate->ready == 0)
+	while (!gate->ready)
 		pthread_cond_wait(&gate->condition, &gate->mutex);
-	gate->ready = 0;
+	gate->ready = false;
 	pthread_mutex_unlock(&gate->mutex);
 }
 
 void	gate_open(t_gate *gate)
 {
 	pthread_mutex_lock(&gate->mutex);
-	gate->ready = 1;
+	gate->ready = true;
 	pthread_cond_signal(&gate->condition);
 	pthread_mutex_unlock(&gate->mutex);
 }

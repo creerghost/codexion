@@ -21,19 +21,21 @@
 
 static bool	init_resources(t_application *app)
 {
-	if (!init_dongles(&app->dongles, app->args.num_coders,
-			app->args.scheduler))
+	size_t	count;
+
+	count = (size_t)app->args.num_coders;
+	if (!init_dongles(&app->dongles, count, app->args.scheduler))
 		return (false);
-	app->dongles_initialized = app->args.num_coders;
-	if (!init_coders(&app->coders, app->args.num_coders,
+	app->dongles_initialized = count;
+	if (!init_coders(&app->coders, count,
 			&app->context, app->dongles))
 		return (false);
-	app->coders_initialized = app->args.num_coders;
+	app->coders_initialized = count;
 	if (!init_scheduler(&app->scheduler, &app->context,
 			app->coders, app->dongles))
 		return (false);
-	init_monitor(&app->monitor, &app->context, app->coders,
-		app->args.num_coders);
+	app->scheduler_initialized = true;
+	init_monitor(&app->monitor, &app->context, app->coders, count);
 	return (true);
 }
 
@@ -46,7 +48,7 @@ bool	init_application(t_application *app, int ac, char **av)
 		return (false);
 	if (!init_context(&app->context, &app->args))
 		return (false);
-	app->context_initialized = 1;
+	app->context_initialized = true;
 	if (!init_resources(app))
 		return (free_application(app), false);
 	return (true);

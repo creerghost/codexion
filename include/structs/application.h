@@ -13,6 +13,8 @@
 #ifndef APPLICATION_H
 # define APPLICATION_H
 
+# include <stdbool.h>
+# include <stddef.h>
 # include "structs/args.h"
 # include "structs/context.h"
 # include "structs/coder.h"
@@ -28,12 +30,13 @@ typedef struct s_application
 	t_dongle		*dongles;
 	t_scheduler		scheduler;
 	t_monitor		monitor;
-	int				context_initialized;
-	int				coders_initialized;
-	int				dongles_initialized;
-	int				coder_threads_created;
-	int				scheduler_thread_created;
-	int				monitor_thread_created;
+	bool			context_initialized;
+	size_t			coders_initialized;
+	size_t			dongles_initialized;
+	size_t			coder_threads_created;
+	bool			scheduler_initialized;
+	bool			scheduler_thread_created;
+	bool			monitor_thread_created;
 }	t_application;
 
 #endif

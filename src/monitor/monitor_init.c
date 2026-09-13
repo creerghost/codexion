@@ -13,7 +13,7 @@
 #include "modules/monitor_api.h"
 
 void	init_monitor(t_monitor *monitor, t_context *context,
-			t_coder *coders, int count)
+			t_coder *coders, size_t count)
 {
 	monitor->context = context;
 	monitor->coders = coders;

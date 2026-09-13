@@ -20,8 +20,9 @@ void	free_application(t_application *app)
 {
 	if (app == NULL)
 		return ;
-	if (app->scheduler.context != NULL)
+	if (app->scheduler_initialized)
 		free_scheduler(&app->scheduler);
+	app->scheduler_initialized = false;
 	app->monitor.context = NULL;
 	app->monitor.coders = NULL;
 	app->monitor.count = 0;
@@ -35,5 +36,5 @@ void	free_application(t_application *app)
 	app->dongles_initialized = 0;
 	if (app->context_initialized)
 		free_context(&app->context);
-	app->context_initialized = 0;
+	app->context_initialized = false;
 }
