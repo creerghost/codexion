@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/13 15:26:28 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 17:22:12 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ bool	queue_push(t_queue *queue, t_request request)
 
 bool	queue_pop(t_queue *queue, t_request *request)
 {
-	size_t	idx;
-
 	if (queue == NULL || request == NULL || queue->size == 0)
 		return (false);
 	*request = queue->heap[0];
