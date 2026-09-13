@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/13 18:38:26 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 18:40:12 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	init_gate(t_gate *gate)
 void	gate_wait(t_gate *gate)
 {
 	pthread_mutex_lock(&gate->mutex);
-	while (&gate->ready == 0)
+	while (gate->ready == 0)
 		pthread_cond_wait(&gate->condition, &gate->mutex);
 	gate->ready = 0;
 	pthread_mutex_unlock(&gate->mutex);
