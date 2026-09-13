@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+         #
+#    By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/08 22:00:53 by vlnikola          #+#    #+#              #
-#    Updated: 2026/09/12 23:09:54 by vlnikola         ###   ########.fr        #
+#    Updated: 2026/09/13 15:31:22 by vlnikola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

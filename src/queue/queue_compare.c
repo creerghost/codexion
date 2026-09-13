@@ -6,12 +6,11 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/13 14:45:58 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 15:06:50 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "modules/queue_api.h"
-#include "queue_internal.h"
 
 bool	request_precedes(const t_request *first,
 			const t_request *second, t_scheduler_mode mode)
