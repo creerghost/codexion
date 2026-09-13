@@ -6,8 +6,43 @@
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/12 23:30:00 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 22:00:40 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "modules/scheduler_api.h"
+#include "structs/args.h"
+#include "structs/context.h"
+
+void	free_scheduler(t_scheduler *scheduler)
+{
+	if (scheduler == NULL || scheduler->context == NULL)
+		return ;
+	pthread_cond_destroy(&scheduler->condition);
+	pthread_mutex_destroy(&scheduler->mutex);
+	scheduler->context = NULL;
+	scheduler->coders = NULL;
+	scheduler->dongles = NULL;
+	scheduler->count = 0;
+	scheduler->notified = 0;
+}
+
+bool	init_scheduler(t_scheduler *scheduler, t_context *context,
+			t_coder *coders, t_dongle *dongles)
+{
+	if (scheduler == NULL || context == NULL || context->args == NULL
+		|| coders == NULL || dongles == NULL)
+		return (false);
+	scheduler->context = NULL;
+	scheduler->count = 0;
+	scheduler->notified = 0;
+	if (pthread_mutex_init(&scheduler->mutex, NULL))
+		return (false);
+	if (pthread_cond_init(&scheduler->condition, NULL))
+		return (pthread_mutex_destroy(&scheduler->mutex), false);
+	scheduler->context = context;
+	scheduler->coders = coders;
+	scheduler->dongles = dongles;
+	scheduler->count = context->args->num_coders;
+	return (true);
+}
