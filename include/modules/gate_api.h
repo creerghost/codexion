@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   queue.h                                            :+:      :+:    :+:   */
+/*   gate_api.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,20 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef QUEUE_H
-# define QUEUE_H
+#ifndef GATE_API_H
+# define GATE_API_H
 
-# include <stddef.h>
-# include "structs/args.h"
-# include "structs/request.h"
+# include <stdbool.h>
+# include "structs/gate.h"
 
-typedef struct s_queue
-{
-	t_request			*heap;
-	size_t				size;
-	size_t				capacity;
-	unsigned long long	next_sequence;
-	t_scheduler_mode	mode;
-}	t_queue;
+bool	init_gate(t_gate *gate);
+void	gate_wait(t_gate *gate);
+void	gate_open(t_gate *gate);
+void	free_gate(t_gate *gate);
 
 #endif

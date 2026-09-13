@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   queue.h                                            :+:      :+:    :+:   */
+/*   queue_api.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,20 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef QUEUE_H
-# define QUEUE_H
+#ifndef QUEUE_API_H
+# define QUEUE_API_H
 
-# include <stddef.h>
-# include "structs/args.h"
-# include "structs/request.h"
+# include <stdbool.h>
+# include "structs/queue.h"
 
-typedef struct s_queue
-{
-	t_request			*heap;
-	size_t				size;
-	size_t				capacity;
-	unsigned long long	next_sequence;
-	t_scheduler_mode	mode;
-}	t_queue;
+bool	init_queue(t_queue *queue, size_t capacity, t_scheduler_mode mode);
+void	free_queue(t_queue *queue);
+bool	queue_push(t_queue *queue, t_request request);
+bool	queue_pop(t_queue *queue, t_request *request);
+bool	queue_peek(const t_queue *queue, t_request *request);
 
 #endif

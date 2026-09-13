@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   atoi.h                                             :+:      :+:    :+:   */
+/*   gate.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/09 00:44:48 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/09 00:45:38 by vlnikola         ###   ########.fr       */
+/*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
+/*   Updated: 2026/09/12 23:30:00 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ATOI_H
-# define ATOI_H
+#ifndef GATE_H
+# define GATE_H
 
-int	atoi_flagged(const char *str, int *result);
+# include <pthread.h>
+
+typedef struct s_gate
+{
+	pthread_mutex_t	mutex;
+	pthread_cond_t	condition;
+	int				ready;
+}	t_gate;
 
 #endif

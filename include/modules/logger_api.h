@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   queue.h                                            :+:      :+:    :+:   */
+/*   logger_api.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,20 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef QUEUE_H
-# define QUEUE_H
+#ifndef LOGGER_API_H
+# define LOGGER_API_H
 
-# include <stddef.h>
-# include "structs/args.h"
-# include "structs/request.h"
+# include "structs/context.h"
 
-typedef struct s_queue
-{
-	t_request			*heap;
-	size_t				size;
-	size_t				capacity;
-	unsigned long long	next_sequence;
-	t_scheduler_mode	mode;
-}	t_queue;
+void	log_state(t_context *context, int coder_id, const char *state);
+void	log_burnout(t_context *context, int coder_id);
 
 #endif

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   queue.h                                            :+:      :+:    :+:   */
+/*   application_free.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,20 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef QUEUE_H
-# define QUEUE_H
+#include "modules/application_api.h"
 
-# include <stddef.h>
-# include "structs/args.h"
-# include "structs/request.h"
-
-typedef struct s_queue
+void	free_application(t_application *app)
 {
-	t_request			*heap;
-	size_t				size;
-	size_t				capacity;
-	unsigned long long	next_sequence;
-	t_scheduler_mode	mode;
-}	t_queue;
-
-#endif
+	(void)app;
+}

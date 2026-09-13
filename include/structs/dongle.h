@@ -5,23 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/12 16:59:39 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/12 18:07:26 by vlnikola         ###   ########.fr       */
+/*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
+/*   Updated: 2026/09/12 23:30:00 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef DONGLE_H
-# define CODER_H
+# define DONGLE_H
 
-#include "structs/queue.h"
 # include <pthread.h>
+# include "structs/queue.h"
 
-typedef struct  	s_dongle
+typedef struct s_dongle
 {
-	long long		last_release_time;
+	int				id;
+	int				is_busy;
+	long long		available_at;
 	pthread_mutex_t	mutex;
 	t_queue			queue;
-}               	t_dongle;
+}	t_dongle;
 
 #endif

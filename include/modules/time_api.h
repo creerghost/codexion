@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   queue.h                                            :+:      :+:    :+:   */
+/*   time_api.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,20 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef QUEUE_H
-# define QUEUE_H
+#ifndef TIME_API_H
+# define TIME_API_H
 
-# include <stddef.h>
-# include "structs/args.h"
-# include "structs/request.h"
+# include "structs/context.h"
 
-typedef struct s_queue
-{
-	t_request			*heap;
-	size_t				size;
-	size_t				capacity;
-	unsigned long long	next_sequence;
-	t_scheduler_mode	mode;
-}	t_queue;
+long long	current_time_ms(void);
+long long	simulation_time_ms(t_context *context);
+void		interruptible_sleep(t_context *context, long long duration);
 
 #endif

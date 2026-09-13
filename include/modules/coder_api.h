@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   queue.h                                            :+:      :+:    :+:   */
+/*   coder_api.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,20 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef QUEUE_H
-# define QUEUE_H
+#ifndef CODER_API_H
+# define CODER_API_H
 
-# include <stddef.h>
-# include "structs/args.h"
-# include "structs/request.h"
+# include <stdbool.h>
+# include "structs/coder.h"
 
-typedef struct s_queue
-{
-	t_request			*heap;
-	size_t				size;
-	size_t				capacity;
-	unsigned long long	next_sequence;
-	t_scheduler_mode	mode;
-}	t_queue;
+bool		init_coders(t_coder **coders, int count, t_context *context,
+				t_dongle *dongles);
+void		free_coders(t_coder *coders, int count);
+void		*coder_routine(void *argument);
+long long	coder_last_compile(t_coder *coder);
+int			coder_compile_count(t_coder *coder);
 
 #endif

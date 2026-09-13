@@ -41,3 +41,10 @@ Codexion - what is it
 
 ### AI Usage Disclosure
 
+AI (ChatGPT Codex with GPT-5.6 Sol High reasoning model) was used as a design and scaffolding assistant. It helped explain the
+project requirements, review the early parser and initialization code, compare
+architectural approaches, define module ownership around `t_application`,
+create struct and module headers, organize source skeletons. AI did not implement the concurrency simulation, heap
+scheduler, dongle arbitration, monitor logic, or coder routines. All
+AI-assisted structure and prototypes were reviewed and remain the
+responsibility of the project author.

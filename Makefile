@@ -6,7 +6,7 @@
 #    By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/08 22:00:53 by vlnikola          #+#    #+#              #
-#    Updated: 2026/09/09 00:31:50 by vlnikola         ###   ########.fr        #
+#    Updated: 2026/09/12 23:09:54 by vlnikola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,35 @@
 NAME		= codexion
 SRC_DIR		= src
 OBJ_DIR		= obj
-TEST_DIR	= tests
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -pthread
 INCLUDES	= -Iinclude
 
 SRC			= $(SRC_DIR)/main.c \
-			$(SRC_DIR)/parser/flagged_atoi.c \
-			$(SRC_DIR)/parser/process_args.c
+				$(SRC_DIR)/application/application_init.c \
+				$(SRC_DIR)/application/application_run.c \
+				$(SRC_DIR)/application/application_free.c \
+				$(SRC_DIR)/parser/parse_number.c \
+				$(SRC_DIR)/parser/parse_args.c \
+				$(SRC_DIR)/context/context_init.c \
+				$(SRC_DIR)/context/context_state.c \
+				$(SRC_DIR)/queue/queue_init.c \
+				$(SRC_DIR)/queue/queue_heap.c \
+				$(SRC_DIR)/queue/queue_compare.c \
+				$(SRC_DIR)/dongle/dongle_init.c \
+				$(SRC_DIR)/dongle/dongle_request.c \
+				$(SRC_DIR)/dongle/dongle_release.c \
+				$(SRC_DIR)/coder/coder_init.c \
+				$(SRC_DIR)/coder/coder_data.c \
+				$(SRC_DIR)/coder/coder_routine.c \
+				$(SRC_DIR)/gate/gate.c \
+				$(SRC_DIR)/scheduler/scheduler_init.c \
+				$(SRC_DIR)/scheduler/scheduler_routine.c \
+				$(SRC_DIR)/scheduler/scheduler_grant.c \
+				$(SRC_DIR)/monitor/monitor_init.c \
+				$(SRC_DIR)/monitor/monitor_routine.c \
+				$(SRC_DIR)/utils/logger.c \
+				$(SRC_DIR)/utils/time.c
 
 OBJ			= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
@@ -50,7 +71,6 @@ $(OBJ_DIR):
 
 clean:
 	@printf "$(RS)"
-	@$(MAKE) -C $(TEST_DIR) clean
 	@rm -rf $(OBJ_DIR)
 	@printf "$(Y)Object files removed 🚮$(RS)\n"
 
@@ -60,9 +80,6 @@ fclean: clean
 	@printf "$(R)$(NAME) removed $(RS)\n"
 
 re: fclean all
-
-test: all
-	@$(MAKE) -C $(TEST_DIR) run
 
 valgrind: all
 	valgrind ./$(NAME) $(ARGS)
@@ -81,7 +98,6 @@ help:
 	@printf "  clean        - Remove object files and caches\n"
 	@printf "  fclean       - Remove object files, caches and the project\n"
 	@printf "  re           - Recompile the project\n"
-	@printf "  test         - Run all tests\n"
 	@printf "  help         - Show this help message\n"
 
-.PHONY: all clean fclean re test valgrind helgrind help
+.PHONY: all clean fclean re valgrind helgrind help

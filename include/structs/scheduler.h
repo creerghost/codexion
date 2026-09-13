@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   queue.h                                            :+:      :+:    :+:   */
+/*   scheduler.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,20 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef QUEUE_H
-# define QUEUE_H
+#ifndef SCHEDULER_H
+# define SCHEDULER_H
 
-# include <stddef.h>
-# include "structs/args.h"
-# include "structs/request.h"
+# include <pthread.h>
 
-typedef struct s_queue
+typedef struct s_context	t_context;
+typedef struct s_coder		t_coder;
+typedef struct s_dongle		t_dongle;
+
+typedef struct s_scheduler
 {
-	t_request			*heap;
-	size_t				size;
-	size_t				capacity;
-	unsigned long long	next_sequence;
-	t_scheduler_mode	mode;
-}	t_queue;
+	pthread_t		thread;
+	t_context		*context;
+	t_coder			*coders;
+	t_dongle		*dongles;
+	int				count;
+	pthread_mutex_t	mutex;
+	pthread_cond_t	condition;
+	int				notified;
+}	t_scheduler;
 
 #endif

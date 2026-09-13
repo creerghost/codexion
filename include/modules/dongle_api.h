@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   queue.h                                            :+:      :+:    :+:   */
+/*   dongle_api.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,20 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef QUEUE_H
-# define QUEUE_H
+#ifndef DONGLE_API_H
+# define DONGLE_API_H
 
-# include <stddef.h>
-# include "structs/args.h"
-# include "structs/request.h"
+# include <stdbool.h>
+# include "structs/dongle.h"
 
-typedef struct s_queue
-{
-	t_request			*heap;
-	size_t				size;
-	size_t				capacity;
-	unsigned long long	next_sequence;
-	t_scheduler_mode	mode;
-}	t_queue;
+bool	init_dongles(t_dongle **dongles, int count, t_scheduler_mode mode);
+void	free_dongles(t_dongle *dongles, int count);
+bool	dongle_add_request(t_dongle *dongle, t_request request);
+void	dongle_release(t_dongle *dongle, long long release_time,
+			long long cooldown);
 
 #endif

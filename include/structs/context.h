@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/12 17:03:44 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/12 18:33:13 by vlnikola         ###   ########.fr       */
+/*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
+/*   Updated: 2026/09/12 23:30:00 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,16 @@
 # define CONTEXT_H
 
 # include <pthread.h>
-# include "args.h"
 
-typedef struct	s_context
+typedef struct s_args	t_args;
+
+typedef struct s_context
 {
-    t_args      args;
-}				t_context;
+	const t_args		*args;
+	long long			start_time;
+	int					is_running;
+	pthread_mutex_t		state_mutex;
+	pthread_mutex_t		log_mutex;
+}	t_context;
 
 #endif

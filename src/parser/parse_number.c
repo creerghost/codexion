@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   atoi_codexion.c                                   :+:      :+:    :+:   */
+/*   parse_number.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/09 00:42:59 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/09 00:58:10 by vlnikola         ###   ########.fr       */
+/*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
+/*   Updated: 2026/09/12 23:30:00 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
+#include "modules/parser_api.h"
 
-int	atoi_codexion(const char *str, int *result)
+int	atoi_flagged(const char *str, int *result)
 {
 	long	num;
 

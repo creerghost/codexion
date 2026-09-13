@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   queue.h                                            :+:      :+:    :+:   */
+/*   application_init.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,20 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef QUEUE_H
-# define QUEUE_H
+#include <string.h>
+#include "modules/application_api.h"
+#include "modules/parser_api.h"
 
-# include <stddef.h>
-# include "structs/args.h"
-# include "structs/request.h"
-
-typedef struct s_queue
+bool	init_application(t_application *app, int ac, char **av)
 {
-	t_request			*heap;
-	size_t				size;
-	size_t				capacity;
-	unsigned long long	next_sequence;
-	t_scheduler_mode	mode;
-}	t_queue;
-
-#endif
+	memset(app, 0, sizeof(*app));
+	return (parse_args(ac, av, &app->args));
+}

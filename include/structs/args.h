@@ -13,11 +13,11 @@
 #ifndef ARGS_H
 # define ARGS_H
 
-typedef enum e_scheduler
+typedef enum e_scheduler_mode
 {
 	FIFO,
 	EDF
-}						t_scheduler;
+}						t_scheduler_mode;
 
 typedef struct s_args
 {
@@ -28,7 +28,7 @@ typedef struct s_args
 	long				time_to_refactor;
 	int					num_compiles_req;
 	long				dongle_cooldown;
-	t_scheduler			scheduler;
+	t_scheduler_mode	scheduler;
 }						t_args;
 
 #endif
