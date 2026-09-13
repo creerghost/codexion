@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/13 17:54:47 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 18:06:53 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ bool	parse_args(int ac, char **av, t_args *args)
 	while (i < 8)
 	{
 		if (!parse_number(av[i], &nums[i - 1]))
-			return (fprintf(stderr, "Error: argument %i must be a "
+			return (fprintf(stderr, "Error: argument %zu must be a "
 					"non-negative integer\n", i), false);
 		if (!validate_if_positive(i, nums[i - 1]))
-			return (fprintf(stderr, "Error: argument %i must be "
+			return (fprintf(stderr, "Error: argument %zu must be "
 					"positive\n", i), false);
 		i++;
 	}

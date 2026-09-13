@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/13 17:41:03 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 17:57:56 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	init_context(t_context *context, const t_args *args)
 		return (pthread_mutex_destroy(&context->state_mutex), false);
 	context->args = args;
 	context->start_time = 0;
-	context->is_running = 0;
+	context->is_running = 01;
 	return (true);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   application.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
+/*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/12 23:30:00 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 18:03:18 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_application
 	t_dongle		*dongles;
 	t_scheduler		scheduler;
 	t_monitor		monitor;
+	int				context_initialized;
 	int				coders_initialized;
 	int				dongles_initialized;
 	int				coder_threads_created;
