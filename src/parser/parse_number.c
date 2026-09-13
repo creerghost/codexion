@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse_number.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
+/*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/12 23:30:00 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 14:14:05 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
 #include "modules/parser_api.h"
 
-int	atoi_flagged(const char *str, int *result)
+bool	parse_number(const char *str, int *result)
 {
 	long	num;
 

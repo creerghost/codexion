@@ -3,11 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   queue_heap.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
+/*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/12 23:30:00 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 14:50:24 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "modules/queue_api.h"
+

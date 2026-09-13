@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
+/*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/12 23:30:00 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 14:13:54 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	parse_args(int ac, char **av, t_args *args)
 	i = 1;
 	while (i < 8)
 	{
-		if (!atoi_flagged(av[i], &nums[i - 1]))
+		if (!parse_number(av[i], &nums[i - 1]))
 			return (fprintf(stderr, "Error: argument %i must be a "
 					"non-negative integer\n", i), 0);
 		if (!validate_if_positive(i, nums[i - 1]))

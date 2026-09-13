@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   application_init.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
+/*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/12 23:30:00 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 14:16:16 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,7 @@
 bool	init_application(t_application *app, int ac, char **av)
 {
 	memset(app, 0, sizeof(*app));
-	return (parse_args(ac, av, &app->args));
+	if (!parse_args(ac, av, &app->args))
+		return (false);
+	
 }
