@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/13 18:06:53 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 22:16:12 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static bool	assign_args(t_args *args, int *nums, char *scheduler)
 bool	parse_args(int ac, char **av, t_args *args)
 {
 	size_t	i;
-	int	nums[7];
+	int		nums[7];
 
 	if (ac != 9)
 		return (printf("Usage: ./codexion <number_of_coders> "

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   context_state.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/13 17:52:24 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/13 22:15:49 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@ bool	context_is_running(t_context *context)
 	pthread_mutex_lock(&context->state_mutex);
 	running = (context->is_running != 0);
 	pthread_mutex_unlock(&context->state_mutex);
-	return (running);	
+	return (running);
 }
