@@ -38,6 +38,7 @@ SRC			= $(SRC_DIR)/main.c \
 				$(SRC_DIR)/coder/coder_routine.c \
 				$(SRC_DIR)/gate/gate.c \
 				$(SRC_DIR)/scheduler/scheduler_init.c \
+				$(SRC_DIR)/scheduler/scheduler_request.c \
 				$(SRC_DIR)/scheduler/scheduler_routine.c \
 				$(SRC_DIR)/scheduler/scheduler_grant.c \
 				$(SRC_DIR)/monitor/monitor_init.c \

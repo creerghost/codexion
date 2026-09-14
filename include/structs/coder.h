@@ -18,12 +18,14 @@
 
 typedef struct s_context	t_context;
 typedef struct s_dongle		t_dongle;
+typedef struct s_scheduler	t_scheduler;
 
 typedef struct s_coder
 {
 	int				id;
 	pthread_t		thread;
 	t_context		*context;
+	t_scheduler		*scheduler;
 	t_dongle		*left_dongle;
 	t_dongle		*right_dongle;
 	t_gate			gate;

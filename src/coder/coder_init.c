@@ -36,6 +36,7 @@ static bool	init_coder(t_coder *coder, t_context *context,
 		t_dongle *left_dongle, t_dongle *right_dongle)
 {
 	coder->context = context;
+	coder->scheduler = NULL;
 	coder->left_dongle = left_dongle;
 	coder->right_dongle = right_dongle;
 	coder->last_compile_start = context->start_time;
