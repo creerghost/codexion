@@ -6,8 +6,13 @@
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/12 23:30:00 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/14 17:53:35 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "modules/coder_api.h"
+
+void	*coder_routine(void *argument)
+{
+	
+}
