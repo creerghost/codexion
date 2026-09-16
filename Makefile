@@ -17,6 +17,7 @@ SRC_DIR		= src
 OBJ_DIR		= obj
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -pthread
+DEPFLAGS	= -MMD -MP
 INCLUDES	= -Iinclude
 
 SRC			= $(SRC_DIR)/main.c \
@@ -47,6 +48,7 @@ SRC			= $(SRC_DIR)/main.c \
 				$(SRC_DIR)/utils/time.c
 
 OBJ			= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+DEP			= $(OBJ:.o=.d)
 
 G			= \033[1;32m
 Y			= \033[1;33m
@@ -65,7 +67,7 @@ $(NAME): $(OBJ)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	@printf "$(RS)"
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(CFLAGS) $(DEPFLAGS) $(INCLUDES) -c $< -o $@
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
@@ -94,11 +96,13 @@ help:
 	@printf "\n"
 	@printf "Available targets:\n"
 	@printf "  all          - Compile the project\n"
-	@printf "  valgrind     - Run ./codexion with valgrind. Args should be provided. Usage: make valgrind ARGS='3 800 200 200 7 0 FIFO'\n"
-	@printf "  helgrind     - Run ./codexion with helgrind. Args should be provided. Usage: make helgrind ARGS='3 800 200 200 7 0 FIFO'\n"
+	@printf "  valgrind     - Run with valgrind. Usage: make valgrind ARGS='3 800 200 200 200 7 50 fifo'\n"
+	@printf "  helgrind     - Run with helgrind. Usage: make helgrind ARGS='3 800 200 200 200 7 50 fifo'\n"
 	@printf "  clean        - Remove object files and caches\n"
 	@printf "  fclean       - Remove object files, caches and the project\n"
 	@printf "  re           - Recompile the project\n"
 	@printf "  help         - Show this help message\n"
 
 .PHONY: all clean fclean re valgrind helgrind help
+
+-include $(DEP)

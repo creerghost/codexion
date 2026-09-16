@@ -15,7 +15,6 @@
 #include "modules/scheduler_api.h"
 #include "modules/time_api.h"
 #include "modules/monitor_api.h"
-#include "modules/context_api.h"
 #include "structs/application.h"
 
 static void	set_start_time(t_application *app)
@@ -57,6 +56,20 @@ static bool	create_threads(t_application *app)
 	return (true);
 }
 
+static bool	start_threads(t_application *app)
+{
+	bool	created;
+
+	pthread_mutex_lock(&app->context.state_mutex);
+	created = create_threads(app);
+	if (created)
+		set_start_time(app);
+	else
+		app->context.is_running = false;
+	pthread_mutex_unlock(&app->context.state_mutex);
+	return (created);
+}
+
 static void	join_created_threads(t_application *app)
 {
 	size_t	index;
@@ -77,10 +90,8 @@ bool	run_application(t_application *app)
 {
 	if (app == NULL)
 		return (false);
-	set_start_time(app);
-	if (!create_threads(app))
+	if (!start_threads(app))
 	{
-		stop_context(&app->context);
 		if (app->scheduler_thread_created)
 			scheduler_notify(&app->scheduler);
 		join_created_threads(app);

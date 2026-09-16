@@ -2,6 +2,8 @@
 
 # Codexion
 
+## Description
+
 Codexion is a concurrency simulation inspired by the Dining Philosophers
 problem. Coders sit around a shared workspace and repeatedly compile, debug,
 and refactor. A coder needs both adjacent USB dongles at the same time to
@@ -16,6 +18,7 @@ the required number of compiles.
 
 ## Table of Contents
 
+- [Description](#description)
 - [Development History](#development-history)
 - [Current Status](#current-status)
 - [Codebase Structure](#codebase-structure)
@@ -58,10 +61,9 @@ before starting the thread routines:
     refactor, including interruption and failure paths.
 11. I implemented monitor polling for burnout and global completion. A monitor
     stop notifies the scheduler, which wakes every coder gate during shutdown.
-
-The remaining implementation stage is application runtime orchestration:
-establishing one shared start timestamp, creating threads, rolling back partial
-thread creation, and joining all successfully created threads.
+12. I completed application runtime orchestration: one shared start timestamp,
+    tracked thread creation, partial-startup rollback, and joining every thread
+    that was successfully created.
 
 ## Current Status
 
@@ -77,16 +79,13 @@ Completed:
 - [x] Interruptible coder compile/debug/refactor cycles.
 - [x] Burnout and all-coders-finished monitoring.
 - [x] Scheduler-driven wakeup of blocked coder gates during shutdown.
-
-Remaining:
-
-- [ ] Set one shared runtime start timestamp in the context and every coder.
-- [ ] Create scheduler, coder, and monitor threads in a safe order.
-- [ ] Stop and wake the simulation after partial thread-creation failure.
-- [ ] Join every thread that was successfully created.
-- [ ] Run end-to-end FIFO, EDF, cooldown, burnout, completion, and one-coder
+- [x] One shared runtime start timestamp in the context and every coder.
+- [x] Safe scheduler, coder, and monitor thread creation.
+- [x] Stop, wake, and join rollback after partial thread-creation failure.
+- [x] Joining every successfully created thread before resource cleanup.
+- [x] End-to-end FIFO, EDF, cooldown, burnout, completion, and one-coder
       checks.
-- [ ] Run final leak, data-race, and timing verification.
+- [x] Final Memcheck, DRD, relink, and burnout-timing verification.
 
 ## Codebase Structure
 
@@ -195,8 +194,8 @@ Important access rules:
 
 ## Runtime Flow
 
-The implemented worker, scheduler, and monitor routines follow this sequence.
-`run_application()` still needs to create and join their threads.
+The application runner creates the scheduler, coder, and monitor threads, and
+the runtime follows this sequence:
 
 ```mermaid
 sequenceDiagram
@@ -259,12 +258,14 @@ Each module cleans its own partially initialized object. If a later stage
 fails, `init_application()` calls `free_application()`, which destroys only the
 resources recorded as successfully initialized.
 
-The intended runtime lifecycle is:
+The implemented runtime lifecycle is:
 
 ```text
 initialize
+    -> lock the startup barrier
+    -> create scheduler, coder, and monitor threads behind the barrier
     -> set one shared start time
-    -> create coder, scheduler, and monitor threads
+    -> release all threads by unlocking the barrier
     -> run until burnout, completion, or startup failure
     -> mark the context as stopped
     -> broadcast or open every blocking wait point
@@ -322,8 +323,8 @@ printed after the burnout message.
 
 Stopping changes `context->is_running` under `state_mutex`. The monitor then
 notifies the scheduler, and the scheduler opens every coder gate before it
-exits. `run_application()` must apply the same stop-and-notify sequence after a
-startup failure and join every created thread before cleanup.
+exits. After a startup failure, `run_application()` applies the same
+stop-and-notify sequence and joins every created thread before cleanup.
 
 ### One-coder case
 
@@ -333,7 +334,9 @@ implementation must not lock or release that same mutex twice.
 
 ## Thread Synchronization Mechanisms
 
-- `context->state_mutex` protects the global running flag.
+- `context->state_mutex` protects the global running flag and acts as the
+  startup barrier while all threads are created and the shared start time is
+  assigned.
 - `context->log_mutex` serializes output.
 - Each `coder->data_mutex` protects its last compile time and compile count.
 - Each `dongle->mutex` protects its busy state, cooldown timestamp, and request
@@ -399,15 +402,18 @@ make re
 
 ## AI Usage Disclosure
 
-AI (ChatGPT Codex with GPT-5.6 Sol High reasoning model) was used as a design,
-scaffolding, review, and documentation assistant. It helped explain the subject,
-review the parser and initialization code, compare architectural approaches,
-define ownership around `t_application`, create struct and module headers,
-organize source skeletons, implement resource initialization and cleanup, and
-standardize boolean, index, count, naming, and const conventions. It also
-helped document the intended architecture and runtime wiring.
+AI (ChatGPT Codex with GPT-5.6 Sol High Reasoning Model) was used to generate and complete parts of the implementation based on my architecture, requirements, and instructions. I understood how these components should work but used AI to reduce the amount of repetitive implementation and documentation I had to write manually.
 
-AI did not implement the concurrency simulation, scheduler routine, dongle
-arbitration, monitor routine, logger, or coder routine. AI-assisted code and
-documentation were reviewed and remain the responsibility of the project
-author.
+Specifically, AI helped create or complete:
+
+- the project folder structure, structs, module headers, and function prototypes;
+- initialization, partial-failure rollback, and cleanup functions;
+- parts of the queue and scheduler implementation, including request comparison, atomic two-dongle grants, cooldown waiting, and shutdown notification;
+- coder and monitor routines, including interruptible state cycles, compile-count tracking, burnout detection, and serialized logging;
+- application startup, thread creation tracking, startup synchronization, thread joining, and failure handling;
+- Makefile dependency tracking and final Norminette, memory, race-condition, timing, and edge-case verification;
+- the README architecture, runtime-flow, synchronization, and development-history documentation.
+
+Some components were initially written by me and then reviewed or corrected with AI assistance, including the parser, queue operations, dongle request and release operations, coder state accessors, logger, scheduler request handling, and thread routines.
+
+I reviewed the generated code, made design decisions throughout development, and understand the submitted implementation, including its ownership model, heap ordering, mutex and condition-variable usage, scheduling policies, cooldown handling, burnout monitoring, and cleanup paths. I remain responsible for the final submitted work.
