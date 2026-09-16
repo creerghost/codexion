@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/13 22:12:13 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/16 18:41:11 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static bool	init_resources(t_application *app)
 			app->coders, app->dongles))
 		return (false);
 	app->scheduler_initialized = true;
-	init_monitor(&app->monitor, &app->context, app->coders, count);
+	init_monitor(&app->monitor, &app->scheduler);
 	return (true);
 }
 

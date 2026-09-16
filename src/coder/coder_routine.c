@@ -80,7 +80,10 @@ void	*coder_routine(void *argument)
 	t_coder	*coder;
 
 	coder = (t_coder *)argument;
-	while (context_is_running(coder->context) && run_coder_cycle(coder))
-		;
+	while (context_is_running(coder->context))
+	{
+		if (!run_coder_cycle(coder))
+			break ;
+	}
 	return (NULL);
 }

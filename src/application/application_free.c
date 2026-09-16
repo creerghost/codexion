@@ -25,6 +25,7 @@ void	free_application(t_application *app)
 	app->scheduler_initialized = false;
 	app->monitor.context = NULL;
 	app->monitor.coders = NULL;
+	app->monitor.scheduler = NULL;
 	app->monitor.count = 0;
 	if (app->coders_initialized > 0)
 		free_coders(app->coders, app->coders_initialized);

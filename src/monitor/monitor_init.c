@@ -6,16 +6,17 @@
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/13 22:06:54 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/16 18:35:30 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "modules/monitor_api.h"
+#include "structs/scheduler.h"
 
-void	init_monitor(t_monitor *monitor, t_context *context,
-			t_coder *coders, size_t count)
+void	init_monitor(t_monitor *monitor, t_scheduler *scheduler)
 {
-	monitor->context = context;
-	monitor->coders = coders;
-	monitor->count = count;
+	monitor->context = scheduler->context;
+	monitor->coders = scheduler->coders;
+	monitor->scheduler = scheduler;
+	monitor->count = scheduler->count;
 }
