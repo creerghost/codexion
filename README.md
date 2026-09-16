@@ -50,30 +50,43 @@ before starting the thread routines:
    coders, the scheduler, and the monitor.
 7. I wired application initialization in dependency order and cleanup in
    reverse order. This has been checked with a complete build and Valgrind.
+8. I added thread-safe dongle requests and releases, protected coder-state
+   access, serialized logging, and scheduler notifications.
+9. I implemented atomic two-dongle requests, queue-head arbitration, stable
+   dongle lock ordering, pair grants, and timed scheduler waits for cooldowns.
+10. I implemented the coder cycle: request, wait, compile, release, debug, and
+    refactor, including interruption and failure paths.
+11. I implemented monitor polling for burnout and global completion. A monitor
+    stop notifies the scheduler, which wakes every coder gate during shutdown.
 
-The next stage is the concurrency behaviour: dongle requests and releases,
-scheduler arbitration, coder routines, monitor logic, serialized logging, and
-thread startup and shutdown.
+The remaining implementation stage is application runtime orchestration:
+establishing one shared start timestamp, creating threads, rolling back partial
+thread creation, and joining all successfully created threads.
 
 ## Current Status
 
-Completed infrastructure:
+Completed:
 
-- argument parsing and scheduler-mode validation;
-- application ownership model and module interfaces;
-- FIFO/EDF request heap;
-- shared context, running-state access, time helpers, and coder gates;
-- dongle, coder, scheduler, and monitor initialization;
-- reverse-order application cleanup and initialization rollback.
+- [x] Argument parsing and scheduler-mode validation.
+- [x] Application ownership model and module interfaces.
+- [x] FIFO/EDF request heaps with deterministic tie-breakers.
+- [x] Shared context, time helpers, coder gates, and serialized logging.
+- [x] Dongle, coder, scheduler, and monitor initialization and cleanup.
+- [x] Thread-safe dongle request and release operations.
+- [x] Atomic pair scheduling and cooldown-aware timed waiting.
+- [x] Interruptible coder compile/debug/refactor cycles.
+- [x] Burnout and all-coders-finished monitoring.
+- [x] Scheduler-driven wakeup of blocked coder gates during shutdown.
 
-Still to implement:
+Remaining:
 
-- thread creation, coordinated start, waking, and joining;
-- thread-safe dongle request and release operations;
-- atomic two-dongle scheduling and cooldown enforcement;
-- coder compile/debug/refactor routine;
-- burnout and completion monitoring;
-- serialized state logging.
+- [ ] Set one shared runtime start timestamp in the context and every coder.
+- [ ] Create scheduler, coder, and monitor threads in a safe order.
+- [ ] Stop and wake the simulation after partial thread-creation failure.
+- [ ] Join every thread that was successfully created.
+- [ ] Run end-to-end FIFO, EDF, cooldown, burnout, completion, and one-coder
+      checks.
+- [ ] Run final leak, data-race, and timing verification.
 
 ## Codebase Structure
 
@@ -120,8 +133,9 @@ Still to implement:
 ```
 
 Headers are not compiled or added to `SRC` in the Makefile. Source files
-include the headers they need. The private `src/queue/queue_internal.h` header
-belongs to the queue implementation and is not exposed as a public interface.
+include the headers they need. The private `src/queue/queue_internal.h` and
+`src/scheduler/scheduler_internal.h` headers belong to their implementations
+and are not exposed as public interfaces.
 
 Type and naming conventions:
 
@@ -153,6 +167,7 @@ flowchart TD
 
     CODERS -->|each owns| GATE["t_gate"]
     CODERS -->|borrow context| CTX
+    CODERS -->|submit requests| SCHED
     CODERS -->|borrow two neighbours| DONGLES
     DONGLES -->|each owns| QUEUE["t_queue request heap"]
     SCHED -->|borrows arrays| CODERS
@@ -160,25 +175,28 @@ flowchart TD
     SCHED -->|opens selected| GATE
     MON -->|observes protected state| CODERS
     MON -->|stops| CTX
+    MON -->|notifies shutdown| SCHED
 ```
 
 Important access rules:
 
-- A coder knows its own state, its left and right dongles, its gate, and the
-  shared context. It has no pointer to the coder array.
+- A coder knows its own state, its left and right dongles, its gate, the shared
+  context, and the scheduler used to submit work. It has no pointer to the
+  coder array.
 - A dongle owns its availability state, mutex, and request heap. It does not
   know which coder objects exist.
 - A request stores a coder ID, deadline, and arrival sequence rather than a
   coder pointer.
 - The scheduler is the only runtime module allowed to inspect all coders and
   dongles when deciding a grant.
-- The monitor reads coder progress through the coder data interface and stops
-  the simulation through the context interface.
+- The monitor reads coder progress through the coder data interface, stops the
+  simulation through the context interface, and notifies the scheduler so
+  blocked threads can leave their waits.
 
 ## Runtime Flow
 
-The following sequence describes the intended runtime behaviour. The thread
-routines and arbitration stage are still in progress.
+The implemented worker, scheduler, and monitor routines follow this sequence.
+`run_application()` still needs to create and join their threads.
 
 ```mermaid
 sequenceDiagram
@@ -196,12 +214,24 @@ sequenceDiagram
     S->>D: Mark both dongles busy
     S->>G: Open selected coder gate
     G-->>C: Wake coder
-    C->>C: Record compile start and compile count
+    C->>C: Record compile start and compile
     C->>D: Release both with available_at timestamp
-    C->>C: Debug, refactor, and request again
+    C->>C: Increment compile count, debug, and refactor
     M->>C: Read protected compile progress
     M->>X: Stop on burnout or global completion
+    M->>S: Notify shutdown
+    S->>G: Wake every blocked coder gate
 ```
+
+A request is copied into both required dongle heaps while the scheduler mutex
+is held. The request itself is only a scheduling ticket: after both queue roots
+select that coder, the scheduler removes both copies, marks both dongles busy,
+and opens the coder's gate. No request object needs separate cleanup.
+
+When no pair can be granted, the scheduler sleeps on its condition variable.
+If queued work is blocked only by cooldown, it uses the earliest relevant
+`available_at` value as an absolute `pthread_cond_timedwait()` deadline. New
+requests, releases, and shutdown still wake it immediately through a signal.
 
 For EDF, a request deadline is:
 
@@ -253,15 +283,12 @@ are destroyed.
 
 ## Blocking Cases Handled
 
-The infrastructure for these cases exists; the concurrency routines that
-enforce them are still being implemented.
-
 ### Deadlock prevention
 
-Coders will request two dongles as one logical operation instead of taking one
-and waiting while holding it. The scheduler will lock dongles in stable ID
-order and grant both together. This removes the hold-and-wait condition and
-prevents circular lock acquisition.
+Coders request two dongles as one logical operation instead of taking one and
+waiting while holding it. The scheduler locks dongles in stable ID order and
+grants both together. This removes the hold-and-wait condition and prevents
+circular lock acquisition.
 
 ### Starvation prevention
 
@@ -273,16 +300,16 @@ when the coder is eligible at the head of both required dongle queues.
 ### Dongle cooldown
 
 A released dongle records `available_at = release_time + dongle_cooldown`. The
-scheduler must not grant it before that timestamp, even if its request queue is
-not empty. Threads should wait until the next useful event instead of holding a
-mutex while sleeping.
+scheduler does not grant it before that timestamp, even if its request queue is
+not empty. It uses a timed condition wait until the earliest useful cooldown
+deadline instead of holding a mutex or polling continuously.
 
 ### Precise burnout detection
 
 The monitor runs independently from coder threads. It reads each coder's
 `last_compile_start` under the coder data mutex and compares the deadline with
-the current time. It must wake frequently enough to report burnout no more than
-10 ms late.
+the current time. It polls every 500 microseconds so burnout can be reported
+within the required 10 ms window under normal scheduling conditions.
 
 ### Log serialization
 
@@ -293,10 +320,10 @@ printed after the burnout message.
 
 ### Safe shutdown
 
-Stopping changes `context->is_running` under `state_mutex`. Shutdown must then
-wake the scheduler and all coder gates before joining threads; otherwise a
-thread could remain blocked forever. Cleanup occurs only after every created
-thread has been joined.
+Stopping changes `context->is_running` under `state_mutex`. The monitor then
+notifies the scheduler, and the scheduler opens every coder gate before it
+exits. `run_application()` must apply the same stop-and-notify sequence after a
+startup failure and join every created thread before cleanup.
 
 ### One-coder case
 
@@ -313,6 +340,8 @@ implementation must not lock or release that same mutex twice.
   queue.
 - `scheduler->condition` lets the scheduler sleep until a request, release,
   shutdown, or relevant timing event occurs.
+- `pthread_cond_timedwait()` wakes the scheduler when the next queued dongle
+  cooldown expires even if no thread produces a new signal.
 - Each coder gate combines a mutex, condition variable, and `ready` predicate.
   The predicate is checked in a `while` loop because condition variables may
   wake spuriously.
