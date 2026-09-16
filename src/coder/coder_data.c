@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/13 23:14:22 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/16 12:57:38 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ long long	coder_last_compile(t_coder *coder)
 {
 	long long	last_compile;
 
-	if (coder == NULL)
+	if (!coder)
 		return (-1);
 	pthread_mutex_lock(&coder->data_mutex);
 	last_compile = coder->last_compile_start;
