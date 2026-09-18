@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/16 12:58:11 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/16 20:13:55 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,7 @@ void	*coder_routine(void *argument)
 
 	coder = (t_coder *)argument;
 	while (context_is_running(coder->context))
-	{
 		if (!run_coder_cycle(coder))
 			break ;
-	}
 	return (NULL);
 }

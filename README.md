@@ -16,11 +16,25 @@ unfair resource access. A dedicated scheduler grants dongles using either FIFO
 monitor stops the simulation when a coder burns out or when every coder reaches
 the required number of compiles.
 
+### The Dining Philosophers connection
+
+The classic Dining Philosophers problem places philosophers around a table
+where each philosopher needs the two shared forks beside them. Codexion uses
+the same circular resource topology with different actions:
+
+- coders are the philosophers;
+- USB dongles are the forks;
+- compiling is eating and requires both adjacent dongles simultaneously;
+- debugging and refactoring are the non-resource-holding thinking phases;
+- burnout is starvation caused by waiting too long to compile.
+
+The project extends the classic problem with dongle cooldowns, a dedicated
+FIFO/EDF scheduler, and a monitor that detects burnout and completion.
+
 ## Table of Contents
 
 - [Description](#description)
 - [Development History](#development-history)
-- [Current Status](#current-status)
 - [Codebase Structure](#codebase-structure)
 - [Architecture and Wiring](#architecture-and-wiring)
 - [Runtime Flow](#runtime-flow)
@@ -64,28 +78,6 @@ before starting the thread routines:
 12. I completed application runtime orchestration: one shared start timestamp,
     tracked thread creation, partial-startup rollback, and joining every thread
     that was successfully created.
-
-## Current Status
-
-Completed:
-
-- [x] Argument parsing and scheduler-mode validation.
-- [x] Application ownership model and module interfaces.
-- [x] FIFO/EDF request heaps with deterministic tie-breakers.
-- [x] Shared context, time helpers, coder gates, and serialized logging.
-- [x] Dongle, coder, scheduler, and monitor initialization and cleanup.
-- [x] Thread-safe dongle request and release operations.
-- [x] Atomic pair scheduling and cooldown-aware timed waiting.
-- [x] Interruptible coder compile/debug/refactor cycles.
-- [x] Burnout and all-coders-finished monitoring.
-- [x] Scheduler-driven wakeup of blocked coder gates during shutdown.
-- [x] One shared runtime start timestamp in the context and every coder.
-- [x] Safe scheduler, coder, and monitor thread creation.
-- [x] Stop, wake, and join rollback after partial thread-creation failure.
-- [x] Joining every successfully created thread before resource cleanup.
-- [x] End-to-end FIFO, EDF, cooldown, burnout, completion, and one-coder
-      checks.
-- [x] Final Memcheck, DRD, relink, and burnout-timing verification.
 
 ## Codebase Structure
 
@@ -374,6 +366,22 @@ Run it with all mandatory arguments:
 ```
 
 All time values are milliseconds. `scheduler` must be exactly `fifo` or `edf`.
+
+### Arguments
+
+| Argument | Meaning | Constraint |
+| --- | --- | --- |
+| `number_of_coders` | Number of coder threads and dongles | Positive integer |
+| `time_to_burnout` | Maximum time allowed since the simulation start or the beginning of the coder's last compile | Non-negative milliseconds |
+| `time_to_compile` | Time spent compiling while holding both dongles | Non-negative milliseconds |
+| `time_to_debug` | Time spent debugging after releasing the dongles | Non-negative milliseconds |
+| `time_to_refactor` | Time spent refactoring before requesting dongles again | Non-negative milliseconds |
+| `number_of_compiles_required` | Minimum compile count for every coder before completion | Positive integer |
+| `dongle_cooldown` | Time a dongle remains unavailable after release | Non-negative milliseconds |
+| `scheduler` | Dongle arbitration policy | Exactly `fifo` or `edf` |
+
+There are no optional arguments or defaults. Coder IDs are assigned from `1`
+through `number_of_coders`, and the coders and dongles form one circular layout.
 
 Example:
 

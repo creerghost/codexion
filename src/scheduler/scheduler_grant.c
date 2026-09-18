@@ -6,26 +6,15 @@
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/14 15:16:33 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/16 20:18:33 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "modules/scheduler_api.h"
 #include "scheduler_internal.h"
 #include "modules/gate_api.h"
 #include "modules/queue_api.h"
 #include "structs/coder.h"
 #include "structs/dongle.h"
-
-void	scheduler_notify(t_scheduler *scheduler)
-{
-	if (!scheduler)
-		return ;
-	pthread_mutex_lock(&scheduler->mutex);
-	scheduler->notified = true;
-	pthread_cond_signal(&scheduler->condition);
-	pthread_mutex_unlock(&scheduler->mutex);
-}
 
 static bool	dongles_available_for(t_coder *coder, long long now)
 {

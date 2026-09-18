@@ -42,6 +42,7 @@ SRC			= $(SRC_DIR)/main.c \
 				$(SRC_DIR)/scheduler/scheduler_request.c \
 				$(SRC_DIR)/scheduler/scheduler_routine.c \
 				$(SRC_DIR)/scheduler/scheduler_grant.c \
+				$(SRC_DIR)/scheduler/scheduler_notify.c \
 				$(SRC_DIR)/monitor/monitor_init.c \
 				$(SRC_DIR)/monitor/monitor_routine.c \
 				$(SRC_DIR)/utils/logger.c \
