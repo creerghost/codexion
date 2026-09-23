@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/16 12:56:25 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/20 15:34:22 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,11 @@ void	*scheduler_routine(void *argument)
 	pthread_mutex_lock(&scheduler->mutex);
 	while (context_is_running(scheduler->context))
 	{
+		if (scheduler->startup_requests < scheduler->count)
+		{
+			scheduler_wait_locked(scheduler);
+			continue ;
+		}
 		time_now = current_time_ms();
 		if (!scheduler_try_grant_locked(scheduler, time_now))
 			scheduler_wait_locked(scheduler);

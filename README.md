@@ -203,9 +203,10 @@ sequenceDiagram
     C->>G: Wait for an atomic pair grant
     S->>D: Peek queue heads and check cooldown
     S->>D: Mark both dongles busy
+    S->>C: Publish compile start under coder data mutex
     S->>G: Open selected coder gate
     G-->>C: Wake coder
-    C->>C: Record compile start and compile
+    C->>C: Compile
     C->>D: Release both with available_at timestamp
     C->>C: Increment compile count, debug, and refactor
     M->>C: Read protected compile progress

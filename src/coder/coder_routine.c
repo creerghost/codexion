@@ -34,15 +34,7 @@ static void	release_coder_dongles(t_coder *coder)
 
 static bool	compile_code(t_coder *coder)
 {
-	long long	start_time;
-
-	log_state(coder->context, coder->id, "has taken a dongle");
-	log_state(coder->context, coder->id, "has taken a dongle");
-	start_time = current_time_ms();
-	pthread_mutex_lock(&coder->data_mutex);
-	coder->last_compile_start = start_time;
-	pthread_mutex_unlock(&coder->data_mutex);
-	log_state(coder->context, coder->id, "is compiling");
+	log_compile_start(coder->context, coder->id);
 	interruptible_sleep(coder->context,
 		coder->context->args->time_to_compile);
 	release_coder_dongles(coder);

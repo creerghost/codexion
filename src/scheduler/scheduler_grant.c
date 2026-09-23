@@ -6,11 +6,12 @@
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/16 20:18:33 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/20 14:46:23 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scheduler_internal.h"
+#include "modules/coder_api.h"
 #include "modules/gate_api.h"
 #include "modules/queue_api.h"
 #include "structs/coder.h"
@@ -71,6 +72,7 @@ static bool	try_grant_coder(t_coder *coder, long long now)
 	coder->right_dongle->is_busy = true;
 	pthread_mutex_unlock(&second->mutex);
 	pthread_mutex_unlock(&first->mutex);
+	coder_mark_compile_start(coder, now);
 	gate_open(&coder->gate);
 	return (true);
 }

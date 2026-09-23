@@ -35,3 +35,12 @@ long long	coder_last_compile(t_coder *coder)
 	pthread_mutex_unlock(&coder->data_mutex);
 	return (last_compile);
 }
+
+void	coder_mark_compile_start(t_coder *coder, long long start_time)
+{
+	if (!coder)
+		return ;
+	pthread_mutex_lock(&coder->data_mutex);
+	coder->last_compile_start = start_time;
+	pthread_mutex_unlock(&coder->data_mutex);
+}

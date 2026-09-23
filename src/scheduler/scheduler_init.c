@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/16 20:13:33 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/20 15:30:24 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	free_scheduler(t_scheduler *scheduler)
 	scheduler->dongles = NULL;
 	scheduler->count = 0;
 	scheduler->notified = false;
+	scheduler->startup_requests = 0;
 }
 
 bool	init_scheduler(t_scheduler *scheduler, t_context *context,
@@ -51,6 +52,7 @@ bool	init_scheduler(t_scheduler *scheduler, t_context *context,
 	scheduler->context = NULL;
 	scheduler->count = 0;
 	scheduler->notified = false;
+	scheduler->startup_requests = 0;
 	if (pthread_mutex_init(&scheduler->mutex, NULL))
 		return (false);
 	if (pthread_cond_init(&scheduler->condition, NULL))

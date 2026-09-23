@@ -27,7 +27,7 @@ static void	set_start_time(t_application *app)
 	index = 0;
 	while (index < app->coders_initialized)
 	{
-		app->coders[index].last_compile_start = start_time;
+		coder_mark_compile_start(&app->coders[index], start_time);
 		index++;
 	}
 }

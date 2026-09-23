@@ -18,6 +18,6 @@ void	scheduler_notify(t_scheduler *scheduler)
 		return ;
 	pthread_mutex_lock(&scheduler->mutex);
 	scheduler->notified = true;
-	pthread_cond_signal(&scheduler->condition);
+	pthread_cond_broadcast(&scheduler->condition);
 	pthread_mutex_unlock(&scheduler->mutex);
 }

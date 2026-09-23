@@ -27,7 +27,7 @@ static int	find_burned_out(t_monitor *monitor, long long now)
 	while (index < monitor->count)
 	{
 		last_compile = coder_last_compile(&monitor->coders[index]);
-		if (now >= last_compile
+		if (now > last_compile
 			+ monitor->context->args->time_to_burnout)
 			return (monitor->coders[index].id);
 		index++;

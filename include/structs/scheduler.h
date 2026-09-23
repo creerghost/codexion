@@ -6,7 +6,7 @@
 /*   By: vlnikola <vlnikola@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/12 23:30:00 by vlnikola          #+#    #+#             */
-/*   Updated: 2026/09/12 23:30:00 by vlnikola         ###   ########.fr       */
+/*   Updated: 2026/09/20 15:29:47 by vlnikola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_scheduler
 	pthread_mutex_t	mutex;
 	pthread_cond_t	condition;
 	bool			notified;
+	size_t			startup_requests;
 }	t_scheduler;
 
 #endif

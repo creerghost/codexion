@@ -29,9 +29,9 @@ bool	parse_number(const char *str, int *result)
 	{
 		if (*str < '0' || *str > '9')
 			return (false);
-		num = num * 10 + (*str - '0');
-		if (num > INT_MAX || num < INT_MIN)
+		if (num > (INT_MAX - (*str - '0')) / 10)
 			return (false);
+		num = num * 10 + (*str - '0');
 		str++;
 	}
 	*result = num;

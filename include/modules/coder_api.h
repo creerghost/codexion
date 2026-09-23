@@ -23,5 +23,6 @@ void		free_coders(t_coder *coders, size_t count);
 void		*coder_routine(void *argument);
 long long	coder_last_compile(t_coder *coder);
 int			coder_compile_count(t_coder *coder);
+void		coder_mark_compile_start(t_coder *coder, long long start_time);
 
 #endif
