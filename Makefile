@@ -6,7 +6,7 @@
 #    By: vlnikola <vlnikola@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/08 22:00:53 by vlnikola          #+#    #+#              #
-#    Updated: 2026/09/13 15:31:22 by vlnikola         ###   ########.fr        #
+#    Updated: 2026/09/28 17:01:39 by vlnikola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRC_DIR		= src
 OBJ_DIR		= obj
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -pthread
-DEPFLAGS	= -MMD -MP
+DEPFLAGS	=
 INCLUDES	= -Iinclude
 
 SRC			= $(SRC_DIR)/main.c \
