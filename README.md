@@ -186,35 +186,6 @@ Important access rules:
 
 ## Runtime Flow
 
-The application runner creates the scheduler, coder, and monitor threads, and
-the runtime follows this sequence:
-
-```mermaid
-sequenceDiagram
-    participant C as Coder thread
-    participant D as Two dongles
-    participant S as Scheduler thread
-    participant G as Coder gate
-    participant M as Monitor thread
-    participant X as Shared context
-
-    C->>D: Enqueue request on both dongles
-    C->>S: Notify that work is available
-    C->>G: Wait for an atomic pair grant
-    S->>D: Peek queue heads and check cooldown
-    S->>D: Mark both dongles busy
-    S->>C: Publish compile start under coder data mutex
-    S->>G: Open selected coder gate
-    G-->>C: Wake coder
-    C->>C: Compile
-    C->>D: Release both with available_at timestamp
-    C->>C: Increment compile count, debug, and refactor
-    M->>C: Read protected compile progress
-    M->>X: Stop on burnout or global completion
-    M->>S: Notify shutdown
-    S->>G: Wake every blocked coder gate
-```
-
 A request is copied into both required dongle heaps while the scheduler mutex
 is held. The request itself is only a scheduling ticket: after both queue roots
 select that coder, the scheduler removes both copies, marks both dongles busy,
@@ -413,16 +384,13 @@ make re
 
 AI (ChatGPT Codex with GPT-5.6 Sol High Reasoning Model) was used to generate and complete parts of the implementation based on my architecture, requirements, and instructions. I understood how these components should work but used AI to reduce the amount of repetitive implementation and documentation I had to write manually.
 
-Specifically, AI helped create or complete:
+Specifically, AI helped with:
 
 - the project folder structure, structs, module headers, and function prototypes;
 - initialization, partial-failure rollback, and cleanup functions;
-- parts of the queue and scheduler implementation, including request comparison, atomic two-dongle grants, cooldown waiting, and shutdown notification;
-- coder and monitor routines, including interruptible state cycles, compile-count tracking, burnout detection, and serialized logging;
-- application startup, thread creation tracking, startup synchronization, thread joining, and failure handling;
-- Makefile dependency tracking and final Norminette, memory, race-condition, timing, and edge-case verification;
+- parts of the queue and scheduler implementation: request comparison, atomic two-dongle grants, cooldown waiting, and shutdown notification;
 - the README architecture, runtime-flow, synchronization, and development-history documentation.
 
-Some components were initially written by me and then reviewed or corrected with AI assistance, including the parser, queue operations, dongle request and release operations, coder state accessors, logger, scheduler request handling, and thread routines.
+Some components were initially written by me and then reviewed or corrected with AI assistance, including the dongle request and release operations, coder state accessors, scheduler request handling, and thread routines.
 
 I reviewed the generated code, made design decisions throughout development, and understand the submitted implementation, including its ownership model, heap ordering, mutex and condition-variable usage, scheduling policies, cooldown handling, burnout monitoring, and cleanup paths. I remain responsible for the final submitted work.
